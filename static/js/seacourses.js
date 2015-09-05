@@ -108,10 +108,112 @@ var page = 0;
 //
 
 var courses = [];
+var searchedCourses = [];
 $(document).ready(function() {
     $.getJSON( '/search', function( data ) {
         $.each( data, function( key, val ) {
             courses.push(val);
         });
     });
+    searchedCourses = courses;
 });
+
+function search()
+{
+    var dept = 'ESE';
+    var deptCode = '123';
+    var name = '';
+    var dec = '';
+    var sbc = '';
+    var prof = '';
+    var days = '';
+    var start = '';
+    var end = '';
+
+    searchedCourses = [];
+
+    for (var i = 0; i < courses.length; i++)
+    {
+        var split = [];
+        var j = 0;
+        var hit = true;
+
+        if (dept && dept != '')
+            if (courses[i].dept.toLowerCase() != dept.toLowerCase())
+                continue;
+
+        if (deptCode && deptCode != '')
+            if (courses[i].code != deptCode)
+                continue;
+
+        if (name && name != '')
+            if (courses[i].name.toLowerCase() != jQuery(name).text())
+                continue;
+
+        if (prof && prof != '')
+            if (courses[prof].toLowerCase().trim() != prof.toLowerCase().trim())
+                continue;
+
+        if (start && start != '')
+            if (courses[i].start != start)
+                continue;
+
+        if (end && end != '')
+            if (courses[i].end != end)
+                continue;
+
+        if (dec && dec != '')
+        {
+            split = dec.split();
+            hit = true;
+            for (j = 0; j < split.length; j++)
+            {
+                if (courses[i].dec.indexOf(split[j]) == -1)
+                {
+                    hit = false;
+                    break;
+                }
+            }
+            if (!hit)
+                continue;
+        }
+
+        if (sbc && sbc != '')
+        {
+            split = sbc.split();
+            hit = true;
+            for (j = 0; j < split.length; j++)
+            {
+                if (courses[i].sbcs.indexOf(split[j]))
+                {
+                    hit = false;
+                    break;
+                }
+            }
+            if (!hit)
+                continue;
+        }
+
+        if (days && days != '')
+        {
+            //I'm hard coding. too tired for this.
+            if (days.toLowerCase().indexOf('m') != -1)
+                if (courses[i].days.indexOf('m') == -1)
+                    continue;
+            if (days.toLowerCase().indexOf('tu') != -1)
+                if (courses[i].days.indexOf('tu') == -1)
+                    continue;
+            if (days.toLowerCase().indexOf('w') != -1)
+                if (courses[i].days.indexOf('w') == -1)
+                    continue;
+            if (days.toLowerCase().indexOf('th') != -1)
+                if (courses[i].days.indexOf('th') == -1)
+                    continue;
+            if (days.toLowerCase().indexOf('f') != -1)
+                if (courses[i].days.indexOf('f') == -1)
+                    continue;
+        }
+
+        searchedCourses.push(courses[i]);
+    }
+}
