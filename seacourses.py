@@ -3,11 +3,13 @@
     ~~~~~~~~~~~~~~
     An alternate course search and planning app for Stony Brook University
 
-    :author: Brian Yang and Brian Chen
+    :author: Brian Chen, Kevin Li, Brian Yang
 """
 
-from flask import Flask
+from flask import Flask, render_template, jsonify, Response
 from pymongo import MongoClient
+import json
+from classes.course import Course
 
 app = Flask(__name__)
 
@@ -15,13 +17,24 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/db')
+@app.route('/search')
 def connect():
     client = MongoClient("mongodb://localhost:27017")
     cursor = client.seacourses.courseInfo.find()
-    for document in cursor:
-        print(document["name"] + document["_id"])
-    return 'Hola2!'
+
+    courses = []
+    for course in cursor:
+        courses.append(Course(course))
+
+    def serialize(obj):
+        return obj.__dict__
+
+    return Response(response=json.dumps(courses, default=serialize),
+                    status=200,
+                    mimetype="application/json")
+
+    # return render_template('index.html',
+    #                        courses=client.seacourses.courseInfo.find())
 
 # This is just to make sure the mongo table is correct. which it isn't. for now. :'(
 @app.route('/test')
@@ -40,6 +53,10 @@ def test():
             html += "</tr>"
     html += "</table"
     return html
+
+@app.route('/schedule')
+def schedule():
+    return render_template('schedule.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
