@@ -106,3 +106,12 @@ var page = 0;
 //
 //
 //
+
+var courses = [];
+$(document).ready(function() {
+    $.getJSON( '/search', function( data ) {
+        $.each( data, function( key, val ) {
+            courses.push(val);
+        });
+    });
+});

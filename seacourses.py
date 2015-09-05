@@ -6,7 +6,7 @@
     :author: Brian Chen, Kevin Li, Brian Yang
 """
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, Response
 from pymongo import MongoClient
 import json
 from classes.course import Course
@@ -29,7 +29,10 @@ def connect():
     def serialize(obj):
         return obj.__dict__
 
-    return json.dumps(courses, default=serialize)
+    return Response(response=json.dumps(courses, default=serialize),
+                    status=200,
+                    mimetype="application/json")
+
     # return render_template('index.html',
     #                        courses=client.seacourses.courseInfo.find())
 
@@ -50,6 +53,10 @@ def test():
             html += "</tr>"
     html += "</table"
     return html
+
+@app.route('/schedule')
+def schedule():
+    return render_template('schedule.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
