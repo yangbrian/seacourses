@@ -106,6 +106,20 @@ function previousPage() {
 $(document).ready(function() {
     $('.searchField').hide();
 
+    var i;
+
+    function parseCourses(i) {
+        console.log("bbbbb");
+        console.log(courses);
+        var obj = jQuery.parseJSON(courses[i]);
+        alert(obj.name);
+    }
+
+    for (i = 0; i < 15; i++) {
+        parseCourses(i);
+        console.log("aaaa");
+    }
+
     $('#searchBox').change(function() {
         var $valueOfDiv= $(this).find('option:selected').val();
         $('#' + $valueOfDiv + 'Search').toggle();
