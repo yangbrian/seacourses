@@ -103,5 +103,21 @@ function previousPage() {
     loadCourses();
 }
 
+$(document).ready(function() {
+    $('.searchField').hide();
+
+    $('#searchBox').change(function() {
+        var $valueOfDiv= $(this).find('option:selected').val();
+        $('#' + $valueOfDiv + 'Search').toggle();
+    });
+
+    //$('#searchBox').change(function() {
+    //    var $valueOfDiv= $(this).find('option:selected').val();
+    //    $(this).click(function() {
+    //        $('#' + $valueOfDiv + 'Search').toggle();
+    //    })
+    //});
+});
+
 
 
