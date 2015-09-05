@@ -42,7 +42,9 @@ def saveToDatabase(data):
     #Save a new document into the collection
     collection.insert_one(data)
 
-    print(data)
+    # if len(data['name']) == 0:
+    # if data['deptCodeNum'] == 'AAS327':
+    #     print(data)
 
 # Open the text doc with all the class information
 textDoc = open('../schedules/fall2015.txt', 'r')
@@ -62,28 +64,46 @@ for i in range(0, 10000):
 
         # Department code - start of a new class
         elif is3LetterWord(split[0]) and is3Numbers(split[1]):
-            j = 0
-            currentData = {'_id': 0, 'deptCodeNum': split[0] + split[1], 'name': '', 'prof': '', 'days': '',
-                           'startTime': '', 'endTime': '', 'loc': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '',
-                           'credits': ''}
-            if length > 2:
-                if len(split[2]) == 1 or len(split[2]) == 2:
-                    currentData['dec'] = split[2]
-                    currentData['name'] = textDoc.readline()
+            deptCodeNum = split[0] + split[1]
+            if currentData['deptCodeNum'] != deptCodeNum:
+                currentData = {'_id': 0, 'deptCodeNum': deptCodeNum, 'name': '', 'prof': '', 'days': '',
+                               'startTime': '', 'endTime': '', 'loc': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '',
+                               'credits': ''}
+                if length > 2:
+                    if (len(split[2]) == 1 and textString.find('Credit') == -1) or len(split[2]) == 2:
+                        currentData['dec'] = split[2]
+                        nextLine = textDoc.readline()
+                        while len(nextLine.split()) == 0:
+                            nextLine = textDoc.readline()
+                        index = nextLine.find('Advisory') if nextLine.find('Advisory') != -1 else nextLine.find('Prerequisite')
+                        if index == -1:
+                            currentData['name'] = nextLine
+                        else:
+                            currentData['name'] = nextLine[:index]
+                            currentData['prereqs'] = '' if nextLine.find('Advisory') != -1 else nextLine[index + 15:]
+                            print(currentData)
+                    else:
+                        currentData['name'] = ''
+                        count = 2
+                        while count < length and split[count].find('Credit') == -1:
+                            currentData['name'] = currentData['name'] + split[count] + ' '
+                            count += 1
+                        if count < length and split[count].find('Credit') != -1:
+                            currentData['credits'] = split[count + 1]
+
                 else:
-                    currentData['name'] = ''
-                    count = 2
-                    while count < length and split[count].find('Credit') == -1:
-                        currentData['name'] = currentData['name'] + split[count] + ' '
-                        count += 1
-                    if count < length and split[count].find('Credit') != -1:
-                        currentData['credits'] = split[count + 1]
+                    nextLine = textDoc.readline()
+                    if len(nextLine.split()) == 1:
+                        currentData['dec'] = nextLine
+                        currentData['name'] = textDoc.readline()
+                    else:
+                        currentData['name'] = nextLine
 
         # Credit and SBC Line
         elif split[0].find('Credit') != -1:
             currentData['credits'] = split[1]
             for k in range(3, len(split)):
-                currentData['sbcs'] = currentData['sbcs'] + split[k]
+                currentData['sbcs'] += split[k]
 
         #Prereqs line
         elif split[0].find('Prereq') != -1:

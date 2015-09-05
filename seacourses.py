@@ -23,12 +23,23 @@ def connect():
         print(document["name"] + document["_id"])
     return 'Hola2!'
 
-@app.route('test')
-def connect():
+# This is just to make sure the mongo table is correct. which it isn't. for now. :'(
+@app.route('/test')
+def test():
     client = MongoClient("mongodb://localhost:27017")
     cursor = client.seacourses.courseInfo.find()
+    html = "<table>"
+    html += "<tr><td>Dept Code</td><td>Name</td><td>ID</td>"
 
-    return 'test!'
+    for document in cursor:
+        if len(document["name"]) < 1:
+            html += "<tr>"
+            html += "<td>" + document["deptCodeNum"] + "</td>"
+            html += "<td>" + document["name"] + "</td>"
+            html += "<td>" + document["_id"] + "</td>"
+            html += "</tr>"
+    html += "</table"
+    return html
 
 if __name__ == '__main__':
     app.run(debug=True)
