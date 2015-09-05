@@ -263,7 +263,6 @@ $(document).ready(function() {
         var i;
 
         function parseCourses(i) {
-            //console.log(courses);
             var obj = courses[i];
 
             var newTableRow = $('<tr>');
@@ -289,26 +288,26 @@ $(document).ready(function() {
             var newTableEnd = $('<td>');
             newTableEnd.addClass('tableEnd');
 
-            $('newTableDepartment').append(obj.dept);
-            $('newTableCourseCode').append(obj.code);
-            $('newTableCourseName').append(obj.name);
-            $('newTableDEC').append(obj.dec);
-            $('newTableSBC').append(obj.sbcs);
-            $('newTableProfessor').append(obj.prof);
-            $('newTableDays').append(obj.days);
-            $('newTableStart').append(obj.start);
-            $('newTableEnd').append(obj.end);
+            newTableDepartment.append(obj.dept);
+            newTableCourseCode.append(obj.code);
+            newTableCourseName.append(obj.name);
+            newTableDEC.append(obj.dec);
+            newTableSBC.append(obj.sbcs);
+            newTableProfessor.append(obj.prof);
+            newTableDays.append(obj.days);
+            newTableStart.append(obj.start);
+            newTableEnd.append(obj.end);
 
-            $('newTableRow').append($(newTableCheck));
-            $('newTableRow').append($(newTableDepartment));
-            $('newTableRow').append($(newTableCourseCode));
-            $('newTableRow').append($(newTableCourseName));
-            $('newTableRow').append($(newTableDEC));
-            $('newTableRow').append($(newTableSBC));
-            $('newTableRow').append($(newTableProfessor));
-            $('newTableRow').append($(newTableDays));
-            $('newTableRow').append($(newTableStart));
-            $('newTableRow').append($(newTableEnd));
+            newTableRow.append(newTableCheck);
+            newTableRow.append(newTableDepartment);
+            newTableRow.append(newTableCourseCode);
+            newTableRow.append(newTableCourseName);
+            newTableRow.append(newTableDEC);
+            newTableRow.append(newTableSBC);
+            newTableRow.append(newTableProfessor);
+            newTableRow.append(newTableDays);
+            newTableRow.append(newTableStart);
+            newTableRow.append(newTableEnd);
 
             $('#bigTable').append($(newTableRow));
 
