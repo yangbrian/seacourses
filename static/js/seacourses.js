@@ -108,15 +108,42 @@ var page = 0;
 //
 
 var courses = [];
+var selectedCourses = [];
 var searchedCourses = [];
 $(document).ready(function() {
     $.getJSON( '/search', function( data ) {
         $.each( data, function( key, val ) {
             courses.push(val);
         });
+
+        selectedCourses.push(courses[0]);
+        selectedCourses.push(courses[1]);
+        selectedCourses.push(courses[2]);
+        selectedCourses.push(courses[3]);
     });
-    searchedCourses = courses;
 });
+
+function Schedule() {
+
+    this.schedule = [];
+
+    // start with a blank schedule
+    for (var i = 0; i < 7; i++) {
+        var day = [];
+        for (var j = 0; j < 28; j++)
+            day.push(0);
+
+        this.schedule.push(day);
+    }
+
+    $.each(selectedCourses, function(index, value) {
+        // calculate blocks
+        var startTime = value.start.match(/(\d{1,2}):(\d{2}) ([ap]m)/);
+
+
+    });
+
+}
 
 function search()
 {
@@ -217,3 +244,19 @@ function search()
         searchedCourses.push(courses[i]);
     }
 }
+
+
+$(document).ready(function() {
+    $('.searchField').hide();
+
+    $('#searchBox').change(function() {
+        var $valueOfDiv= $(this).find('option:selected').val();
+        $('#' + $valueOfDiv + 'Search').toggle();
+        $('#searchBox').val('selectDropDown');
+    });
+
+    $('#clearButton').click(function() {
+        $('.searchField').hide();
+    });
+
+});
