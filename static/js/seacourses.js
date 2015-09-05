@@ -107,8 +107,6 @@ var page = 0;
 //
 //
 
-
-
 function Schedule() {
 
     this.schedule = [];
@@ -231,6 +229,59 @@ function search()
     }
 }
 
+function parseCourses(i) {
+    var obj = courses[i];
+
+    var newTableRow = $('<tr>');
+    newTableRow.addClass('tableCourses');
+    var newTableCheck = $('<td>');
+    newTableCheck.addClass('tableCheck');
+    var newTableDepartment = $('<td>');
+    newTableDepartment.addClass('tableDepartment');
+    var newTableCourseCode = $('<td>');
+    newTableCourseCode.addClass('tableCourseCode');
+    var newTableCourseName = $('<td>');
+    newTableCourseName.addClass('tableCourseName');
+    var newTableDEC = $('<td>');
+    newTableDEC.addClass('tableDEC');
+    var newTableSBC = $('<td>');
+    newTableSBC.addClass('tableSBC');
+    var newTableProfessor = $('<td>');
+    newTableProfessor.addClass('tableProfessor');
+    var newTableDays = $('<td>');
+    newTableDays.addClass('tableDays');
+    var newTableStart = $('<td>');
+    newTableStart.addClass('tableStart');
+    var newTableEnd = $('<td>');
+    newTableEnd.addClass('tableEnd');
+
+    newTableDepartment.append(obj.dept);
+    newTableCourseCode.append(obj.code);
+    newTableCourseName.append(obj.name);
+    newTableDEC.append(obj.dec);
+    newTableSBC.append(obj.sbcs);
+    newTableProfessor.append(obj.prof);
+    newTableDays.append(obj.days);
+    newTableStart.append(obj.start);
+    newTableEnd.append(obj.end);
+
+    newTableRow.append(newTableCheck);
+    newTableRow.append(newTableDepartment);
+    newTableRow.append(newTableCourseCode);
+    newTableRow.append(newTableCourseName);
+    newTableRow.append(newTableDEC);
+    newTableRow.append(newTableSBC);
+    newTableRow.append(newTableProfessor);
+    newTableRow.append(newTableDays);
+    newTableRow.append(newTableStart);
+    newTableRow.append(newTableEnd);
+
+    $('#bigTable').append($(newTableRow));
+
+    //console.log("yoo");
+
+}
+
 var courses = [];
 var selectedCourses = [];
 var searchedCourses = [];
@@ -288,7 +339,6 @@ $(document).ready(function() {
             var newTableEnd = $('<td>');
             newTableEnd.addClass('tableEnd');
 
-            newTableCheck.append('<input type="checkbox"/>');
             newTableDepartment.append(obj.dept);
             newTableCourseCode.append(obj.code);
             newTableCourseName.append(obj.name);
