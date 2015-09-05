@@ -101,3 +101,14 @@ body {
 [id|=cell-sbc] {
     width: 5%;
 }
+
+#sidebar {
+    width:200px;
+    height:100%;
+    top:0px;
+    right:0px;
+}
+
+#heading {
+    font-size:2.5em;
+}

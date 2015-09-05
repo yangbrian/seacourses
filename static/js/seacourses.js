@@ -288,6 +288,7 @@ $(document).ready(function() {
             var newTableEnd = $('<td>');
             newTableEnd.addClass('tableEnd');
 
+            newTableCheck.append('<input type="checkbox"/>');
             newTableDepartment.append(obj.dept);
             newTableCourseCode.append(obj.code);
             newTableCourseName.append(obj.name);
