@@ -109,14 +109,13 @@ $(document).ready(function() {
     $('#searchBox').change(function() {
         var $valueOfDiv= $(this).find('option:selected').val();
         $('#' + $valueOfDiv + 'Search').toggle();
+        $('#searchBox').val('selectDropDown');
     });
 
-    //$('#searchBox').change(function() {
-    //    var $valueOfDiv= $(this).find('option:selected').val();
-    //    $(this).click(function() {
-    //        $('#' + $valueOfDiv + 'Search').toggle();
-    //    })
-    //});
+    $('#clearButton').click(function() {
+       $('.searchField').hide();
+    });
+
 });
 
 
