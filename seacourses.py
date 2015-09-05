@@ -23,5 +23,12 @@ def connect():
         print(document["name"] + document["_id"])
     return 'Hola2!'
 
+@app.route('test')
+def connect():
+    client = MongoClient("mongodb://localhost:27017")
+    cursor = client.seacourses.courseInfo.find()
+
+    return 'test!'
+
 if __name__ == '__main__':
     app.run(debug=True)
