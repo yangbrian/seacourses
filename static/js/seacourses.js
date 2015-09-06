@@ -80,9 +80,10 @@ function Schedule() {
                 $item.css('height', 30*(endRow - startRow));
 
                 var $itemInner = $('<div>');
-                $itemInner.append(value.name);
                 $itemInner.append(value.dept);
                 $itemInner.append(value.code);
+                $itemInner.append('<br>');
+                $itemInner.append(value.name);
                 $item.append($itemInner);
                 $row.find('.schedule-cell:eq(' + col + ')').append($item);
             });
@@ -376,6 +377,7 @@ function redrawSelectedClasses()
         listElement.addClass('selectedClassItem');
         listElement.append($('<button type="button" class="btn btn-danger" name="' + course.id + '" onclick="removeSelectedCLass(this);">&#10006</button>'));
         string += course.dept + course.code + ' - ' + course.name;
+        string += '<br/>' + course.days + " " + course.start + "-" + course.end;
         listElement.append(string);
 
         $('#classList').append(listElement);
