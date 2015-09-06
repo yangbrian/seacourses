@@ -358,6 +358,6 @@ function createSchedule() {
             }
         }
     }
+    arrayOfSchedules[possibilities-1] = scheduleArray;
     console.log(arrayOfSchedules);
-    arrayOfSchedules[possibilities] = scheduleArray;
 }
