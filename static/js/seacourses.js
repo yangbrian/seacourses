@@ -66,7 +66,6 @@ function Schedule() {
     });
 
 
-
 }
 
 function search()
@@ -249,7 +248,7 @@ $(document).ready(function() {
         $('.searchField').hide();
 
         var i;
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 2000; i++) {
             parseCourses(i);
         }
 
