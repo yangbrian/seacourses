@@ -265,7 +265,6 @@ function calculateTimeBlock(time) {
 
 function displaySchedules(resultSet)
 {
-    console.log(resultSet);
     for (var x = 0; x < resultSet.length; x++)
     {
         var poop = '';
@@ -273,7 +272,6 @@ function displaySchedules(resultSet)
         {
             poop += resultSet[x].classes[y].id + ' ';
         }
-        console.log(poop);
     }
     //Only display first five. I am tired. -BC
     var count = resultSet.length;
