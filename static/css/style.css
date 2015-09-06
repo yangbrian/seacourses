@@ -56,7 +56,8 @@ body {
 }
 
 .schedule-cell:first-child {
-    display: none;
+    width: 75px;
+    text-align: center;
 }
 
 .schedule-item {
