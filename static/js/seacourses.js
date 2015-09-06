@@ -18,6 +18,18 @@ $(document).ready(function() {
     });
 });
 
+function calculateTimeBlock(time) {
+
+    var matches = time.match(/(\d{1,2}):(\d{2})([AP]M)/);
+    var row = ((
+            (parseInt(matches[1]) + ((matches[3] == 'AM' && parseInt(matches[1]) == 12)
+            || (matches[3] == 'PM' && parseInt(matches[1]) != 12) ? 12 : 0))
+            + (matches[2] == '00' ? 0 :.5)
+        ) - 8) * 2;
+
+    return row;
+}
+
 function Schedule() {
 
     this.schedule = [];
@@ -32,20 +44,9 @@ function Schedule() {
     }
 
     $.each(selectedCourses, function(index, value) {
-        // calculate blocks
-        var startMatches = value.start.match(/(\d{1,2}):(\d{2})([AP]M)/);
-        var startRow = ((
-            (parseInt(startMatches[1]) + ((startMatches[3] == 'AM' && parseInt(startMatches[1]) == 12)
-            || (startMatches[3] == 'PM' && parseInt(startMatches[1]) != 12) ? 12 : 0))
-                + (startMatches[2] == '00' ? 0 :.5)
-            ) - 8) * 2;
+        var startRow = calculateTimeBlock(value.start);
 
-        var endMatches = value.end.match(/(\d{1,2}):(\d{2})([AP]M)/);
-        var endRow = ((
-                (parseInt(endMatches[1]) + ((endMatches[3] == 'AM' && parseInt(endMatches[1]) == 12)
-                || (endMatches[3] == 'PM' && parseInt(endMatches[1]) != 12) ? 12 : 0))
-                + (endMatches[2] == '00' ? 0 :.5)
-            ) - 8) * 2;
+        var endRow = calculateTimeBlock(value.end);
         var columns = [];
 
         var days = value.days;
