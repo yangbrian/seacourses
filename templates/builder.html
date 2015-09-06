@@ -19,7 +19,7 @@
     </head>
     <body>
         <div class="container clearfix">
-            <h2 id="heading">Seacourses - Automatic Schedule Builder (Beta)</h2>
+            <h2 id="heading">Seacourses - Automatic Schedule Builder (Pre-alpha)</h2>
             <br>
             <span>Welcome to the automatic schedule builder - pre-alpha edition.</span>
             <br>
@@ -63,7 +63,9 @@
                         <input class="form-control" type="text" name="class6" placeholder="SCH101">
                     </div>
                 </div>
-                <input type="submit" value="Generate me some schedules!" id="generateButton" class="btn btn-default" onclick="scheduleBuild()">
+                <input type="submit" value="Generate me some schedules!" id="generateButton" class="btn btn-success" onclick="scheduleBuild()">
+                <br>
+                <input type="button" value="Go back to the main page" id="backToMainButton" class="btn btn-warning" onclick="window.location.replace('/')">
             </div>
             <div id="resultDiv" style="float: right">
             </div>

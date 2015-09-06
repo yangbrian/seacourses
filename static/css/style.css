@@ -82,7 +82,12 @@ body {
 }
 
 #generateButton {
-    font-weight: bold;
+    margin: 5px;
+}
+
+#backToMainButton {
+    margin: 5px;
+    margin-top: 0px;
 }
 
 .table-hover tr:hover {
