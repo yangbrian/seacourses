@@ -312,3 +312,32 @@ function removeSelectedCLass(obj)
     $('#checkbox_' + name).attr('checked', false);
     jQuery(obj).parent().remove();
 }
+
+//function createSchedule() {
+//    var scheduleArray =  new Array(5);
+//    var a;
+//    var b;
+//    var c;
+//    var d;
+//
+//    for (a = 0; a < scheduleArray.size(); a++) {
+//        scheduleArray[a] = new Array(28);
+//        for (b = 0; b < scheduleArray[a].size(); b++) {
+//            scheduleArray[a][b] = 0;
+//        }
+//    }
+//
+//    for (c = 0; c < 5; c++) {
+//        for (d = 0; d < 28; d++) {
+//            if (classtime == d) {
+//                if (scheduleArray[c][d] == 0) {
+//                    scheduleArray[c][d] = 1;
+//                } else {
+//                    break;
+//                }
+//            }
+//        }
+//    }
+//
+//    //add scheduleArray to list of possible schedules
+//}
