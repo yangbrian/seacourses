@@ -223,7 +223,12 @@ function parseCourses(i) {
 var courses = [];
 var selectedCourses = [];
 var searchedCourses = [];
+var arrayOfSchedules = new Array();
+var possibilities = 1;
 $(document).ready(function() {
+
+
+
     $.getJSON( '/search', function( data ) {
         $.each( data, function( key, val ) {
             courses.push(val);
@@ -233,6 +238,8 @@ $(document).ready(function() {
         //selectedCourses.push(courses[1]);
         //selectedCourses.push(courses[2]);
         //selectedCourses.push(courses[3]);
+
+        createSchedule();
 
         $('.searchField').hide();
 
@@ -314,31 +321,43 @@ function removeSelectedCLass(obj)
     jQuery(obj).parent().remove();
 }
 
-//function createSchedule() {
-//    var scheduleArray =  new Array(5);
-//    var a;
-//    var b;
-//    var c;
-//    var d;
-//
-//    for (a = 0; a < scheduleArray.size(); a++) {
-//        scheduleArray[a] = new Array(28);
-//        for (b = 0; b < scheduleArray[a].size(); b++) {
-//            scheduleArray[a][b] = 0;
-//        }
-//    }
-//
-//    for (c = 0; c < 5; c++) {
-//        for (d = 0; d < 28; d++) {
-//            if (classtime == d) {
-//                if (scheduleArray[c][d] == 0) {
-//                    scheduleArray[c][d] = 1;
-//                } else {
-//                    break;
-//                }
-//            }
-//        }
-//    }
-//
-//    //add scheduleArray to list of possible schedules
-//}
+
+function createSchedule() {
+    var testCourses = new Array(5);
+    var z;
+    var y;
+    for (z = 0; z < 5; z++) {
+        testCourses[z] = courses[z];
+        //console.log(courses[z]);
+    }
+
+    var scheduleArray =  new Array(5);
+    var a;
+    var b;
+    var c;
+    var d;
+
+    for (a = 0; a < scheduleArray.length; a++) {
+        scheduleArray[a] = new Array(28);
+        for (b = 0; b < scheduleArray[a].length; b++) {
+            scheduleArray[a][b] = 0;
+        }
+    }
+
+    for (c = 0; c < 5; c++) {
+        for (d = 0; d < 28; d++) {
+            for (y = 0; y < testCourses.length; y++) {
+                //console.log(testCourses[y].start);
+                if (calculateTimeBlock(testCourses[y].start) == d) {
+                    if (scheduleArray[c][d] == 0) {
+                        scheduleArray[c][d] = 1;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    console.log(arrayOfSchedules);
+    arrayOfSchedules[possibilities] = scheduleArray;
+}
