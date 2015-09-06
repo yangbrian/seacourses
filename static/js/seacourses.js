@@ -228,6 +228,8 @@ function parseCourses(obj) {
     newTableRow.addClass('tableCourses');
     var newTableCheck = $('<td>');
     newTableCheck.addClass('tableCheck');
+    var newTableId = $('<td>');
+    newTableId.addClass('tableId');
     var newTableDepartment = $('<td>');
     newTableDepartment.addClass('tableDepartment');
     var newTableCourseCode = $('<td>');
@@ -240,6 +242,8 @@ function parseCourses(obj) {
     newTableSBC.addClass('tableSBC');
     var newTableProfessor = $('<td>');
     newTableProfessor.addClass('tableProfessor');
+    var newTableType = $('<td>');
+    newTableType.addClass('tableType');
     var newTableDays = $('<td>');
     newTableDays.addClass('tableDays');
     var newTableStart = $('<td>');
@@ -248,23 +252,27 @@ function parseCourses(obj) {
     newTableEnd.addClass('tableEnd');
 
     newTableCheck.append($('<input type="checkbox" id="checkbox_' + obj.id + '" onclick="toggleClass(' + obj.id + ');">'));
+    newTableId.append(obj.id);
     newTableDepartment.append(obj.dept);
     newTableCourseCode.append(obj.code);
     newTableCourseName.append(obj.name);
     newTableDEC.append(obj.dec);
     newTableSBC.append(obj.sbcs);
     newTableProfessor.append(obj.prof);
+    newTableType.append(obj.type);
     newTableDays.append(obj.days);
     newTableStart.append(obj.start);
     newTableEnd.append(obj.end);
 
     newTableRow.append(newTableCheck);
+    newTableRow.append(newTableId);
     newTableRow.append(newTableDepartment);
     newTableRow.append(newTableCourseCode);
     newTableRow.append(newTableCourseName);
     newTableRow.append(newTableDEC);
     newTableRow.append(newTableSBC);
     newTableRow.append(newTableProfessor);
+    newTableRow.append(newTableType);
     newTableRow.append(newTableDays);
     newTableRow.append(newTableStart);
     newTableRow.append(newTableEnd);
