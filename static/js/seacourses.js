@@ -366,41 +366,83 @@ function removeSelectedCLass(obj)
 
 
 function createSchedule() {
+    //array made for testing
     var testCourses = new Array(5);
-    var z;
-    var y;
-    for (z = 0; z < 5; z++) {
+    for (var z = 0; z < 5; z++) {
         testCourses[z] = courses[z];
         //console.log(courses[z]);
     }
 
+    //possible schedule to be built. 5 days a week
     var scheduleArray =  new Array(5);
-    var a;
-    var b;
-    var c;
-    var d;
 
-    for (a = 0; a < scheduleArray.length; a++) {
+    //var timeSlotArray = new Array(5);
+    //timeSlotArray[0] = new Array();
+    //timeSlotArray[1] = new Array();
+    //timeSlotArray[2] = new Array();
+    //timeSlotArray[3] = new Array();
+    //timeSlotArray[4] = new Array();
+
+    //possible schedule to be built. 28 time slots a day
+    for (var a = 0; a < scheduleArray.length; a++) {
         scheduleArray[a] = new Array(28);
-        for (b = 0; b < scheduleArray[a].length; b++) {
+        //fill all time slots with 0. this means there are no class conflicts
+        for (var b = 0; b < scheduleArray[a].length; b++) {
             scheduleArray[a][b] = 0;
         }
     }
 
-    for (c = 0; c < 5; c++) {
-        for (d = 0; d < 28; d++) {
-            for (y = 0; y < testCourses.length; y++) {
-                //console.log(testCourses[y].start);
-                if (calculateTimeBlock(testCourses[y].start) == d) {
-                    if (scheduleArray[c][d] == 0) {
-                        scheduleArray[c][d] = 1;
-                    } else {
-                        break;
+    //we are going to check through each array to see if we can create a schedule with no time conflicts
+    for (var c = 0; c < 5; c++) {
+        for (var d = 0; d < 28; d++) {
+            var timeSlotArray = new Array(5);
+            timeSlotArray[0] = new Array();
+            timeSlotArray[1] = new Array();
+            timeSlotArray[2] = new Array();
+            timeSlotArray[3] = new Array();
+            timeSlotArray[4] = new Array();
+            //testCourses is the amount of courses being used to build the schedule
+            for (var y = 0; y < testCourses.length; y++) {
+                //there are 5 arrays. one for each day
+                //var timeSlotArray = new Array(5);
+                //timeSlotArray[0] = new Array();
+                //timeSlotArray[1] = new Array();
+                //timeSlotArray[2] = new Array();
+                //timeSlotArray[3] = new Array();
+                //timeSlotArray[4] = new Array();
+                for (var e = calculateTimeBlock(testCourses[y].start); e < calculateTimeBlock(testCourses[y].end); e++) {
+                    //add in the time slot to the appropriate day
+                    var days = testCourses[y].days;
+                    if (days.indexOf('M') > -1)
+                        timeSlotArray[0].push(e);
+                    if (days.indexOf('TU') > -1)
+                        timeSlotArray[1].push(e);
+                    if (days.indexOf('W') > -1)
+                        timeSlotArray[2].push(e);
+                    if (days.indexOf('TH') > -1)
+                        timeSlotArray[3].push(e);
+                    if (days.indexOf('F') > -1)
+                        timeSlotArray[4].push(e);
+                }
+                //loop through each timeslotarray
+                for (var k = 0; k < 5; k++) {
+                    for (var f = 0; f < timeSlotArray[k].length; f++) {
+                        //if the timeslotarray contains the same number...
+                        if (timeSlotArray[k][f] == d) {
+                            //change schedulearray element to 1 to make it occupied
+                            if (scheduleArray[c][d] == 0) {
+                                scheduleArray[c][d] = 1;
+                            }
+                            //else it is occupied. we forget this schedule and go on to the next one
+                            else {
+                                break;
+                            }
+                        }
                     }
                 }
             }
         }
     }
+    arrayOfSchedules[possibilities-1] = scheduleArray;
     console.log(arrayOfSchedules);
-    arrayOfSchedules[possibilities] = scheduleArray;
 }
