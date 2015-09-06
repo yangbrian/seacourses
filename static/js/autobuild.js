@@ -88,7 +88,6 @@ function scheduleBuild()
                         result.schedule = sched;
                         result.classes.push(courses[0][i]);
                         result.classes.push(courses[1][j]);
-                        console.log(result);
                         resultSet.push(result);
                     }
                 }
@@ -212,7 +211,7 @@ function scheduleBuild()
         default:
             break;
     }
-    console.log(resultSet);
+    displaySchedules(resultSet);
 }
 
 function createSchedule(courses)
@@ -296,4 +295,30 @@ function calculateTimeBlock(time) {
         ) - 8) * 2;
 
     return row;
+}
+
+function displaySchedules(resultSet)
+{
+    console.log(resultSet);
+    //Only display first five. I am tired. -BC
+    var count = resultSet.length;
+    for (var i = 0; i < (count > 5 ? 5 : count); i++)
+    {
+        var newList = $('<ul>');
+        newList.addClass('list-group');
+
+        for (var j = 0; j < resultSet[i].classes.length; j++)
+        {
+            var newListItem = $('<li>');
+            newListItem.addClass('list-group-item selectedClassItem');
+
+            var courseObj = resultSet[i].classes[j];
+            var string = courseObj.dept + courseObj.code + ' (' + courseObj.days + ', ' +
+                courseObj.start + ' - ' + courseObj.end + ')';
+
+            newListItem.append(string);
+            newList.append(newListItem);
+        }
+        $('#resultDiv').append(newList);
+    }
 }
