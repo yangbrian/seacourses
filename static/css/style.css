@@ -33,13 +33,23 @@ body {
 }
 
 .schedule-cell {
-    flex: 1 0 auto;
+    /*flex: 1 0 auto;*/
+    width: 150px;
     background-color: #333;
     border: 1px solid #aaa;
+    position: relative;
 }
 
 .schedule-cell:first-child {
     display: none;
+}
+
+.schedule-item {
+    width: 150px;
+    position: absolute;
+    background-color: #7fb626;
+    color: #fff;
+    z-index: 2;
 }
 
 .searchField {
