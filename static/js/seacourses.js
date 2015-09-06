@@ -8,12 +8,18 @@ function calculateTimeBlock(time) {
 
     // time = :00 means its right on the hour, no class ends right on the hour
     // time = :53 means it ends right before the hour, so +1. No class starts at :53.
+    // time = :30 means it starts at half hour. No class ends then.
     // anything else is considered half hour (:20 or :23)
 
     var row = ((
+
+            // convert to 24 hour clock
             (parseInt(matches[1]) + ((matches[3] == 'AM' && parseInt(matches[1]) == 12)
             || (matches[3] == 'PM' && parseInt(matches[1]) != 12) ? 12 : 0))
-            + (matches[2] == '00' ? 0 : matches[2] == '53' ? 1 : .5)
+
+            + (matches[2] == '00' ? 0 : // starts on the hour
+                (matches[2] == '53' || matches[2] == '50') ? 1 :  // ends before the hour
+                .5)
         ) - 8) * 2;
 
     return row;
@@ -37,7 +43,10 @@ function Schedule() {
         this.schedule.push(day);
     }
 
+    selectedCourses.push(courses[1]);
+    selectedCourses.push(courses[4]);
     selectedCourses.push(courses[3]);
+
 
     $.each(selectedCourses, function(index, value) {
         var startRow = calculateTimeBlock(value.start);
