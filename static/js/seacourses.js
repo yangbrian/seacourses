@@ -1,23 +1,6 @@
 /**
  * Main script for SeaCourses
  */
-
-var courses = [];
-var selectedCourses = [];
-var searchedCourses = [];
-$(document).ready(function() {
-    $.getJSON( '/search', function( data ) {
-        $.each( data, function( key, val ) {
-            courses.push(val);
-        });
-        
-        selectedCourses.push(courses[0]);
-        selectedCourses.push(courses[1]);
-        selectedCourses.push(courses[2]);
-        selectedCourses.push(courses[3]);
-    });
-});
-
 function calculateTimeBlock(time) {
 
     var matches = time.match(/(\d{1,2}):(\d{2})([AP]M)/);
@@ -65,21 +48,25 @@ function Schedule() {
         if (days.indexOf('S') > -1)
             columns.push(6);
     });
+}
 
-
+function hideSearchField(obj)
+{
+    jQuery(obj).next().find('input').val('');
+    jQuery(obj).parent().hide();
 }
 
 function search()
 {
-    var dept = 'ESE';
-    var deptCode = '123';
-    var name = '';
-    var dec = '';
-    var sbc = '';
-    var prof = '';
-    var days = '';
-    var start = '';
-    var end = '';
+    var dept = $('input[name=departmentField]').val();
+    var deptCode = $('input[name=courseCodeField]').val();
+    var name = $('input[name=courseNameField]').val();
+    var dec = $('input[name=decField]').val();
+    var sbc = $('input[name=sbcField]').val();
+    var prof = $('input[name=professorField]').val();
+    var days = $('input[name=daysField]').val();
+    var start = $('input[name=startField]').val();
+    var end = $('input[name=endField]').val();
 
     searchedCourses = [];
 
@@ -102,7 +89,7 @@ function search()
                 continue;
 
         if (prof && prof != '')
-            if (courses[prof].toLowerCase().trim() != prof.toLowerCase().trim())
+            if (courses[i].prof && courses[i].prof.length > 0 && courses[i].prof.toLowerCase().trim() != prof.toLowerCase().trim())
                 continue;
 
         if (start && start != '')
@@ -167,11 +154,32 @@ function search()
 
         searchedCourses.push(courses[i]);
     }
+    redrawCourseTable();
 }
 
-function parseCourses(i) {
-    var obj = courses[i];
+function redrawCourseTable() {
+    //Wipe out the current table rows
+    $.each($('.tableCourses'), function(index, value) {
+        value.remove();
+    });
+    for (var i = 0; i < searchedCourses.length; i++)
+    {
+        parseCourses(searchedCourses[i]);
+    }
+}
 
+function showAllCourses() {
+    //Wipe out the current table rows
+    $.each($('.tableCourses'), function(index, value) {
+        value.remove();
+    });
+    for (var i = 0; i < courses.length; i++)
+    {
+        parseCourses(courses[i]);
+    }
+}
+
+function parseCourses(obj) {
     var newTableRow = $('<tr>');
     newTableRow.addClass('tableCourses');
     var newTableCheck = $('<td>');
@@ -250,24 +258,21 @@ $(document).ready(function() {
         });
 
         $('#clearButton').click(function() {
-            $('.searchField').hide();
+            var fields = $('.searchField');
+            fields.find("input").val("");
+            fields.hide();
         });
-
-        $('.searchField').hide();
 
         var i;
         for (i = 0; i < 2000; i++) {
-            parseCourses(i);
+            parseCourses(courses[i]);
         }
 
-        $('#searchBox').change(function() {
-            var $valueOfDiv= $(this).find('option:selected').val();
-            $('#' + $valueOfDiv + 'Search').toggle();
-            $('#searchBox').val('selectDropDown');
-        });
-
-        $('#clearButton').click(function() {
-            $('.searchField').hide();
+        jQuery(document).on('keydown', 'input.inputField', function(e){
+            if (e.which === 13)
+            {
+                search();
+            }
         });
     });
 });
@@ -360,4 +365,6 @@ function createSchedule() {
     }
     arrayOfSchedules[possibilities-1] = scheduleArray;
     console.log(arrayOfSchedules);
+    arrayOfSchedules[possibilities] = scheduleArray;
+}
 }
