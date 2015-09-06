@@ -8,6 +8,9 @@
 
 from flask import Flask, render_template, jsonify, Response
 from pymongo import MongoClient
+from bs4 import BeautifulSoup
+import urllib
+from urllib import request
 import json
 from classes.course import Course
 
@@ -62,6 +65,21 @@ def schedule():
 def main():
     return render_template('main.html')
 
+@app.route('/ratemyprof')
+def scrape():
+    url = 'http://www.ratemyprofessors.com/search.jsp?query=mary+diaz+stony+brook'
+    with urllib.request.urlopen(url) as f:
+        soup = BeautifulSoup(f.read())
+        test = soup.find_all('li')
+        html = len(test)
+        # for item in test:
+        #     html += test
+        return html
+    # return render_template('scrape.html')
+
+@app.route('/builder')
+def build():
+    return render_template('builder.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -283,7 +283,6 @@ var possibilities = 1;
 $(document).ready(function() {
 
 
-
     $.getJSON( '/search', function( data ) {
         $.each( data, function( key, val ) {
             courses.push(val);
@@ -294,7 +293,7 @@ $(document).ready(function() {
         //selectedCourses.push(courses[2]);
         //selectedCourses.push(courses[3]);
 
-        createSchedule();
+        //createSchedule();
 
         $('.searchField').hide();
 
@@ -311,7 +310,7 @@ $(document).ready(function() {
         });
 
         var i;
-        for (i = 0; i < 20; i++) {
+        for (i = 0; i < 2000; i++) {
             parseCourses(courses[i]);
         }
 
@@ -445,6 +444,17 @@ function createSchedule(courseIDs) {
     }
     arrayOfSchedules[possibilities-1] = scheduleArray;
     console.log(arrayOfSchedules);
+}
+
+function getAllDeptCodes()
+{
+    var codes = [];
+    for (var i = 0; i < courses.length; i++)
+    {
+        if (codes.indexOf(courses[i].dept) == -1)
+            codes.push(courses[i].dept);
+    }
+    return codes;
 }
 
 //function generateCourses() {

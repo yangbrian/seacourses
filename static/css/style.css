@@ -63,3 +63,7 @@ body {
 .fieldName {
     width: 220px;
 }
+
+#generateButton {
+    font-weight: bold;
+}
