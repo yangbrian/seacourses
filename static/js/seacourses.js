@@ -18,6 +18,18 @@ $(document).ready(function() {
     });
 });
 
+function calculateTimeBlock(time) {
+
+    var matches = time.match(/(\d{1,2}):(\d{2})([AP]M)/);
+    var row = ((
+            (parseInt(matches[1]) + ((matches[3] == 'AM' && parseInt(matches[1]) == 12)
+            || (matches[3] == 'PM' && parseInt(matches[1]) != 12) ? 12 : 0))
+            + (matches[2] == '00' ? 0 :.5)
+        ) - 8) * 2;
+
+    return row;
+}
+
 function Schedule() {
 
     this.schedule = [];
@@ -32,20 +44,9 @@ function Schedule() {
     }
 
     $.each(selectedCourses, function(index, value) {
-        // calculate blocks
-        var startMatches = value.start.match(/(\d{1,2}):(\d{2})([AP]M)/);
-        var startRow = ((
-            (parseInt(startMatches[1]) + ((startMatches[3] == 'AM' && parseInt(startMatches[1]) == 12)
-            || (startMatches[3] == 'PM' && parseInt(startMatches[1]) != 12) ? 12 : 0))
-                + (startMatches[2] == '00' ? 0 :.5)
-            ) - 8) * 2;
+        var startRow = calculateTimeBlock(value.start);
 
-        var endMatches = value.end.match(/(\d{1,2}):(\d{2})([AP]M)/);
-        var endRow = ((
-                (parseInt(endMatches[1]) + ((endMatches[3] == 'AM' && parseInt(endMatches[1]) == 12)
-                || (endMatches[3] == 'PM' && parseInt(endMatches[1]) != 12) ? 12 : 0))
-                + (endMatches[2] == '00' ? 0 :.5)
-            ) - 8) * 2;
+        var endRow = calculateTimeBlock(value.end);
         var columns = [];
 
         var days = value.days;
@@ -64,7 +65,6 @@ function Schedule() {
         if (days.indexOf('S') > -1)
             columns.push(6);
     });
-
 
 
 }
@@ -249,7 +249,7 @@ $(document).ready(function() {
         $('.searchField').hide();
 
         var i;
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 2000; i++) {
             parseCourses(i);
         }
 
@@ -313,3 +313,32 @@ function removeSelectedCLass(obj)
     $('#checkbox_' + name).attr('checked', false);
     jQuery(obj).parent().remove();
 }
+
+//function createSchedule() {
+//    var scheduleArray =  new Array(5);
+//    var a;
+//    var b;
+//    var c;
+//    var d;
+//
+//    for (a = 0; a < scheduleArray.size(); a++) {
+//        scheduleArray[a] = new Array(28);
+//        for (b = 0; b < scheduleArray[a].size(); b++) {
+//            scheduleArray[a][b] = 0;
+//        }
+//    }
+//
+//    for (c = 0; c < 5; c++) {
+//        for (d = 0; d < 28; d++) {
+//            if (classtime == d) {
+//                if (scheduleArray[c][d] == 0) {
+//                    scheduleArray[c][d] = 1;
+//                } else {
+//                    break;
+//                }
+//            }
+//        }
+//    }
+//
+//    //add scheduleArray to list of possible schedules
+//}

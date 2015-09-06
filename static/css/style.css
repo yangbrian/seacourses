@@ -1,102 +1,5 @@
 body {
-    font: 12px 'Source Sans Pro', sans-serif;
-}
-
-#course-listing {
-    text-align: center;
-}
-
-#course-table, #course-header, #course-search {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-}
-
-.course-row {
-    display: table-row;
-}
-
-.course-cell {
-    display: table-cell;
-    padding: 10px;
-    border: 1px solid;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#row-search .course-cell {
-    padding: 0;
-}
-
-#row-search .course-cell input {
-    padding: 10px;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: center;
-}
-
-.page-nav {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-#course-listing {
-    width: 1024px;
-}
-
-.course-search {
-    width: 100%;
-}
-
-[id|=cell-id] {
-    width: 3%;
-}
-
-[id|=cell-dept] {
-    width: 3%;
-}
-
-[id|=cell-code] {
-    width: 3%;
-}
-
-[id|=cell-section] {
-    width: 5%;
-}
-
-[id|=cell-name] {
-    width: 10%;
-}
-
-[id|=cell-prof] {
-    width: 8%;
-}
-
-[id|=cell-days] {
-    width: 3%;
-}
-
-[id|=cell-start] {
-    width: 5%;
-}
-
-[id|=cell-end] {
-    width: 5%;
-}
-
-[id|=cell-location] {
-    width: 8%;
-}
-
-[id|=cell-decs] {
-    width: 5%;
-}
-
-[id|=cell-sbc] {
-    width: 5%;
+    font: 14px 'Source Sans Pro', sans-serif;
 }
 
 #sidebar {
@@ -133,6 +36,10 @@ body {
     flex: 1 0 auto;
     background-color: #333;
     border: 1px solid #aaa;
+}
+
+.schedule-cell:first-child {
+    display: none;
 }
 
 .searchField {
