@@ -88,3 +88,10 @@ body {
 .table-hover tr:hover {
     cursor: pointer;
 }
+
+#buildButton {
+    bottom: 10px;
+    left: 10px;
+    position: absolute;
+    color: black;
+}
