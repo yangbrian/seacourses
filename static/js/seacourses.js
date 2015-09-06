@@ -43,9 +43,6 @@ function Schedule() {
         this.schedule.push(day);
     }
 
-    selectedCourses.push(courses[1]);
-    selectedCourses.push(courses[4]);
-    selectedCourses.push(courses[3]);
 
 
     $.each(selectedCourses, function(index, value) {
@@ -322,6 +319,14 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#scheduleModal').on('show.bs.modal', function (e) {
+        new Schedule();
+    });
+
+    $('#scheduleModal').on('hide.bs.modal', function (e) {
+        $('.schedule-item').remove();
+    })
 });
 
 function toggleClass(obj)
@@ -356,8 +361,8 @@ function redrawSelectedClasses()
         var listElement = $('<li>');
         var string = '';
 
-        listElement.addClass('list-group-item selectedClassItem');
-        listElement.append($('<button type="button" class="btn" name="' + course.id + '" onclick="removeSelectedCLass(this);">&#10006</button>'));
+        listElement.addClass('selectedClassItem');
+        listElement.append($('<button type="button" class="btn btn-danger" name="' + course.id + '" onclick="removeSelectedCLass(this);">&#10006</button>'));
         string += course.dept + course.code + ' - ' + course.name;
         listElement.append(string);
 
@@ -453,5 +458,4 @@ function createSchedule() {
         }
     }
     arrayOfSchedules[possibilities-1] = scheduleArray;
-    console.log(arrayOfSchedules);
 }

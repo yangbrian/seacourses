@@ -2,11 +2,14 @@ body {
     font: 14px 'Source Sans Pro', sans-serif;
 }
 
-#sidebar {
-    width:200px
-    height:100%;
-    top:0px;
-    right:0px;
+.container {
+    float: left;
+    width: 80%;
+}
+
+.sidebar {
+    width: 20%;
+    float: right;
 }
 
 #heading {
@@ -15,12 +18,25 @@ body {
     font-weight: bold;
 }
 
-#classListContainer {
+#classList li {
+    list-style: none;
+    padding: 5px;
+}
 
+#classList li .btn {
+    padding: 2px;
+    margin-right: 5px;
+}
+
+#classListContainer {
+    position: fixed;
+    right: 0;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
 }
 
 #classListTitle {
-    background-color: #E2E2E2;
 }
 
 #classListTitle span{
@@ -35,8 +51,7 @@ body {
 .schedule-cell {
     /*flex: 1 0 auto;*/
     width: 150px;
-    background-color: #333;
-    border: 1px solid #aaa;
+    border: 1px solid #eee;
     position: relative;
 }
 
@@ -47,9 +62,10 @@ body {
 .schedule-item {
     width: 150px;
     position: absolute;
-    background-color: #7fb626;
+    background-color: #337ab7;
     color: #fff;
     z-index: 2;
+    border: 1px solid #111;
 }
 
 .searchField {
