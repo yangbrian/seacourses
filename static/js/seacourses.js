@@ -80,10 +80,10 @@ function Schedule() {
                 $item.css('height', 30*(endRow - startRow));
 
                 var $itemInner = $('<div>');
-                $item.append(value.name);
-
-                console.log($row);
-                console.log($item);
+                $itemInner.append(value.name);
+                $itemInner.append(value.dept);
+                $itemInner.append(value.code);
+                $item.append($itemInner);
                 $row.find('.schedule-cell:eq(' + col + ')').append($item);
             });
 
@@ -317,6 +317,11 @@ $(document).ready(function() {
                 search();
             }
         });
+
+        $('#bigTable').on('click', 'tr.tableCourses', function() {
+            console.log("Click");
+            $(this).find('[type=checkbox]').click();
+        });
     });
 
     $('#scheduleModal').on('show.bs.modal', function (e) {
@@ -325,7 +330,7 @@ $(document).ready(function() {
 
     $('#scheduleModal').on('hide.bs.modal', function (e) {
         $('.schedule-item').remove();
-    })
+    });
 });
 
 function toggleClass(obj)
