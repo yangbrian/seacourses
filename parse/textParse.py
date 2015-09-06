@@ -127,7 +127,7 @@ for i in range(0, 10000):
             currentData['startTime'] = split[4][0:5]
             currentData['endTime'] = split[4][6:]
             if currentData['endTime'].find('PM') != -1:
-                if currentData['endTime'] == '12:50PM' or currentData['endTime'] == '12:23PM':
+                if currentData['endTime'] == '12:50PM' or currentData['endTime'] == '12:23PM' or currentData['endTime'] == '12:55PM':
                     currentData['startTime'] += 'AM'
                 else:
                     currentData['startTime'] += 'PM'

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="/static/js/bootstrap.min.js"></script>
+
+        <script src="/static/js/autobuild.js"></script>
+
+        <meta charset="UTF-8">
+        <title>Schedule Builder (Beta)</title>
+    </head>
+    <body>
+        <div class="container clearfix">
+            <h2 id="heading">Seacourses - Automatic Schedule Builder (Beta)</h2>
+            <br>
+            <span>Welcome to the automatic schedule builder - pre-alpha edition.</span>
+            <br>
+            <span>Enter a few classes you want to take (no need to fill all 6 slots):</span>
+            <br><br>
+
+            <div class="input-group" style="float: left">
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div class="input-group-addon">Class</div>
+                        <input class="form-control" type="text" name="class1" placeholder="PHY131">
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div class="input-group-addon">Class</div>
+                        <input class="form-control" type="text" name="class2" placeholder="AMS261">
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div class="input-group-addon">Class</div>
+                        <input class="form-control" type="text" name="class3" placeholder="ESE123">
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div class="input-group-addon">Class</div>
+                        <input class="form-control" type="text" name="class4" placeholder="CHE131">
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div class="input-group-addon">Class</div>
+                        <input class="form-control" type="text" name="class5" placeholder="WRT102">
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div class="input-group-addon">Class</div>
+                        <input class="form-control" type="text" name="class6" placeholder="SCH101">
+                    </div>
+                </div>
+                <input type="submit" value="Generate me some schedules!" id="generateButton" class="btn btn-default" onclick="scheduleBuild()">
+            </div>
+            <div id="resultDiv" style="float: right">
+            </div>
+        </div>
+    </body>
+</html>
