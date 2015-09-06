@@ -446,3 +446,15 @@ function createSchedule(courseIDs) {
     arrayOfSchedules[possibilities-1] = scheduleArray;
     console.log(arrayOfSchedules);
 }
+
+//function generateCourses() {
+//    searchQueries = new Array();
+//    var multiCount = 1;
+//    //var numbSearch;
+//    //for (var b = 0; b < numbSearch; b++) {
+//    //    searchQueries[b] = new Array();
+//    //}
+//    for (var a = 0; a < searchQueries.length; a++) {
+//        multiCount = multiCount * searchQueries[a].length;
+//    }
+//}
