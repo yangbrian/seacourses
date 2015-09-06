@@ -4,126 +4,122 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="/static/js/bootstrap.min.js"></script>
 
-    <script src="/static/js/seacourses.js"></script>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+        <script src="/static/js/seacourses.js"></script>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <div class="container">
+            <h2 id="heading">SeaCourses</h2>
+            <br><br>
+            <p>What classes do you want to take?</p>
+            <br>
+            <span>Search by: </span>
+            <!--<input type = "text" name="searchCriteria"> <input type="submit" value="Submit">-->
+            <select name="searchBox" id="searchBox">
+                <option value="selectDropDown">Select your option</option>
+                <option name="departmentDropDown" value="department" class="searchList">Department</option>
+                <option name="courseCodeDropDown" value="courseCode" class="searchList">Code</option>
+                <option name="courseNameDropDown" value="courseName" class="searchList">Name</option>
+                <option name="decDropDown" value="dec" class="searchList">DEC</option>
+                <option name="sbcDropDown" value="sbc" class="searchList">SBC</option>
+                <option name="professorDropDown" value="professor" class="searchList">Professor</option>
+                <option name="daysDropDown" value="days" class="searchList">Days</option>
+                <option name="startDropDown" value="start" class="searchList">Start</option>
+                <option name="endDropDown" value="end" class="searchList">End</option>
+            </select>
 
-    <div class="container">
-        <h2 id="heading">SeaCourses</h2>
+            <br>
 
-        <br><br>
+            <div class="searchField" id="departmentSearch">
+                <button type="button" class="btn" onclick="$('#departmentSearch').hide();">&#10006</button>
+                <span>Department: </span>
+                <input type="text" name="departmentField" placeholder="AMS">
+            </div>
+            <div class="searchField" id="courseCodeSearch">
+                <button type="button" class="btn" onclick="$('#courseCodeSearch').hide();">&#10006</button>
+                <span>Course Code: </span>
+                <input type="text" name="courseCodeField" placeholder="100">
+            </div>
+            <div class="searchField" id="courseNameSearch">
+                <button type="button" class="btn" onclick="$('#courseNameSearch').hide();">&#10006</button>
+                <span>Course Name: </span>
+                <input type="text" name="courseNameField" placeholder="Intro to Statistics">
+            </div>
+            <div class="searchField" id="decSearch">
+                <button type="button" class="btn" onclick="$('#decSearch').hide();">&#10006</button>
+                <span>DEC: </span>
+                <input type="text" name="decField" placeholder="A">
+            </div>
+            <div class="searchField" id="sbcSearch">
+                <button type="button" class="btn" onclick="$('#sbcSearch').hide();">&#10006</button>
+                <span>SBC: </span>
+                <input type="text" name="sbcField" placeholder="SBS">
+            </div>
+            <div class="searchField" id="professorSearch">
+                <button type="button" class="btn" onclick="$('#professorSearch').hide();">&#10006</button>
+                <span>Professor: </span>
+                <input type="text" name="professorField" placeholder="Daniel Kim">
+            </div>
+            <div class="searchField" id="daysSearch">
+                <button type="button" class="btn" onclick="$('#daysSearch').hide();">&#10006</button>
+                <span>Days: </span>
+                <input type="text" name="daysField" placeholder="Monday">
+            </div>
+            <div class="searchField" id="startSearch">
+                <button type="button" class="btn" onclick="$('#startSearch').hide();">&#10006</button>
+                <span>Start: </span>
+                <input type="text" name="startField" placeholder="8am">
+            </div>
+            <div class="searchField" id="endSearch">
+                <button type="button" class="btn" onclick="$('#endSearch').hide();">&#10006</button>
+                <span>End: </span>
+                <input type="text" name="endField" placeholder="9am">
+            </div>
 
-        <p>What classes do you want to take?</p>
+            <br><br>
 
-        <br>
+            <input type="submit" value="Search" id="searchButton" class="btn">
+            <input type="submit" value="Clear all Fields" id="clearButton" class="btn">
 
-        <span>Search by: </span>
-        <!--<input type = "text" name="searchCriteria"> <input type="submit" value="Submit">-->
-        <select name="searchBox" id="searchBox">
-            <option value="selectDropDown">Select your option</option>
-            <option name="departmentDropDown" value="department" class="searchList">Department</option>
-            <option name="courseCodeDropDown" value="courseCode" class="searchList">Code</option>
-            <option name="courseNameDropDown" value="courseName" class="searchList">Name</option>
-            <option name="decDropDown" value="dec" class="searchList">DEC</option>
-            <option name="sbcDropDown" value="sbc" class="searchList">SBC</option>
-            <option name="professorDropDown" value="professor" class="searchList">Professor</option>
-            <option name="daysDropDown" value="days" class="searchList">Days</option>
-            <option name="startDropDown" value="start" class="searchList">Start</option>
-            <option name="endDropDown" value="end" class="searchList">End</option>
-        </select>
+            <br><br>
 
-        <br>
+            <div class="row">
+                <div class="span8">
+                    <table id="bigTable" class="table table-hover" >
+                        <tr>
+                            <th id="checkHead"></th>
+                            <th id="departmentHead">Department</th>
+                            <th id="courseCodeHead">Code</th>
+                            <th id="courseNameHead">Name</th>
+                            <th id="decHead">DEC</th>
+                            <th id="sbcHead">SBC</th>
+                            <th id="professorHead">Professor</th>
+                            <th id="daysHead">Days</th>
+                            <th id="startHead">Start</th>
+                            <th id="endHead">End</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <input type="submit" value="Previous" id="nextButton" class="btn">
+            <input type="submit" value="Next" id="previousButton" class="btn">
 
-        <div class="searchField" id="departmentSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>Department: </span>
-            <input type="text" name="departmentField" placeholder="AMS">
-        </div>
-        <div class="searchField" id="courseCodeSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>Course Code: </span>
-            <input type="text" name="courseCodeField" placeholder="100">
-        </div>
-        <div class="searchField" id="courseNameSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>Course Name: </span>
-            <input type="text" name="courseNameField" placeholder="Intro to Statistics">
-        </div>
-        <div class="searchField" id="decSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>DEC: </span>
-            <input type="text" name="decField" placeholder="A">
-        </div>
-        <div class="searchField" id="sbcSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>SBC: </span>
-            <input type="text" name="sbcField" placeholder="SBS">
-        </div>
-        <div class="searchField" id="professorSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>Professor: </span>
-            <input type="text" name="professorField" placeholder="Daniel Kim">
-        </div>
-        <div class="searchField" id="daysSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>Days: </span>
-            <input type="text" name="daysField" placeholder="Monday">
-        </div>
-        <div class="searchField" id="startSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>Start: </span>
-            <input type="text" name="startField" placeholder="8am">
-        </div>
-        <div class="searchField" id="endSearch">
-            <button type="button" class="btn">&#10006</button>
-            <span>End: </span>
-            <input type="text" name="endField" placeholder="9am">
-        </div>
+            <br><br>
 
-        <br><br>
-
-        <input type="submit" value="Search" id="searchButton" class="btn">
-        <input type="submit" value="Clear all Fields" id="clearButton" class="btn">
-
-        <br><br>
-
-        <div class="row">
-            <div class="span8">
-                <table id="bigTable" class="table table-hover" >
-                    <tr>
-                        <th id="checkHead"></th>
-                        <th id="departmentHead">Department</th>
-                        <th id="courseCodeHead">Code</th>
-                        <th id="courseNameHead">Name</th>
-                        <th id="decHead">DEC</th>
-                        <th id="sbcHead">SBC</th>
-                        <th id="professorHead">Professor</th>
-                        <th id="daysHead">Days</th>
-                        <th id="startHead">Start</th>
-                        <th id="endHead">End</th>
-                    </tr>
-                </table>
+            <div id="classListContainer" class="container">
+                <ul id="classList" class="list-group">
+                    <li id="classListTitle" class="list-group-item"><span>Current Classes</span></li>
+                </ul>
             </div>
         </div>
-
-        <input type="submit" value="Previous" id="nextButton" class="btn">
-        <input type="submit" value="Next" id="previousButton" class="btn">
-    </div>
-
-    <div id="sidebar">
-        <h4>Current Classes (Credit Limit __)</h4>
-    </div>
-
-
-</body>
+    </body>
 </html>

@@ -110,6 +110,18 @@ body {
     font-size:2.5em;
 }
 
+#classListContainer {
+
+}
+
+#classListTitle {
+    background-color: #E2E2E2;
+}
+
+#classListTitle span{
+    font-size: 1.3em;
+    font-weight: bold;
+}
 .schedule-row {
     display: flex;
     height: 30px;
