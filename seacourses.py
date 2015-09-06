@@ -15,9 +15,6 @@ from classes.course import Course
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
 
 @app.route('/search')
 def connect():
@@ -60,7 +57,7 @@ def test():
 def schedule():
     return render_template('schedule.html')
 
-@app.route('/main')
+@app.route('/')
 def main():
     return render_template('main.html')
 
