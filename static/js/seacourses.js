@@ -377,20 +377,13 @@ function removeSelectedCLass(obj)
 function createSchedule() {
     //array made for testing
     var testCourses = new Array(5);
-    for (var z = 0; z < 5; z++) {
+    for (var z = 0; z < testCourses.length; z++) {
         testCourses[z] = courses[z];
         //console.log(courses[z]);
     }
 
     //possible schedule to be built. 5 days a week
     var scheduleArray =  new Array(5);
-
-    //var timeSlotArray = new Array(5);
-    //timeSlotArray[0] = new Array();
-    //timeSlotArray[1] = new Array();
-    //timeSlotArray[2] = new Array();
-    //timeSlotArray[3] = new Array();
-    //timeSlotArray[4] = new Array();
 
     //possible schedule to be built. 28 time slots a day
     for (var a = 0; a < scheduleArray.length; a++) {
@@ -413,12 +406,6 @@ function createSchedule() {
             //testCourses is the amount of courses being used to build the schedule
             for (var y = 0; y < testCourses.length; y++) {
                 //there are 5 arrays. one for each day
-                //var timeSlotArray = new Array(5);
-                //timeSlotArray[0] = new Array();
-                //timeSlotArray[1] = new Array();
-                //timeSlotArray[2] = new Array();
-                //timeSlotArray[3] = new Array();
-                //timeSlotArray[4] = new Array();
                 for (var e = calculateTimeBlock(testCourses[y].start); e < calculateTimeBlock(testCourses[y].end); e++) {
                     //add in the time slot to the appropriate day
                     var days = testCourses[y].days;
@@ -437,10 +424,11 @@ function createSchedule() {
                 for (var k = 0; k < 5; k++) {
                     for (var f = 0; f < timeSlotArray[k].length; f++) {
                         //if the timeslotarray contains the same number...
-                        if (timeSlotArray[k][f] == d) {
+                        if (timeSlotArray[k][f] == d && k == c) {
                             //change schedulearray element to 1 to make it occupied
                             if (scheduleArray[c][d] == 0) {
                                 scheduleArray[c][d] = 1;
+                                //console.log("k =" + k + " f =" + f + " c =" + c + " d =" + d);
                             }
                             //else it is occupied. we forget this schedule and go on to the next one
                             else {
@@ -449,9 +437,16 @@ function createSchedule() {
                         }
                     }
                 }
+
+                console.log(timeSlotArray[0]);
+                console.log(timeSlotArray[1]);
+                console.log(timeSlotArray[2]);
+                console.log(timeSlotArray[3]);
+                console.log(timeSlotArray[4]);
+                console.log("");
             }
         }
     }
     arrayOfSchedules[possibilities-1] = scheduleArray;
-    console.log(arrayOfSchedules);
+    //console.log(arrayOfSchedules);
 }
