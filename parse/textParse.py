@@ -126,13 +126,14 @@ for i in range(0, 10000):
             currentData['days'] = split[3]
             currentData['startTime'] = split[4][0:5]
             currentData['endTime'] = split[4][6:]
-            if currentData['endTime'].find('PM') != 1:
-                if currentData['endTime'] == '12:50PM':
+            if currentData['endTime'].find('PM') != -1:
+                if currentData['endTime'] == '12:50PM' or currentData['endTime'] == '12:23PM':
                     currentData['startTime'] += 'AM'
                 else:
                     currentData['startTime'] += 'PM'
             else:
                 currentData['startTime'] += 'AM'
+
 
             if length > 4:
                 if not split[5].isupper():
