@@ -35,7 +35,6 @@ function scheduleBuild()
 {
     var classCodes = [];
     var courses = [];
-    var result = {'schedule': null, 'classes': new Array()};
     var resultSet = [];
 
     var sched = null;
@@ -65,12 +64,8 @@ function scheduleBuild()
                 sched = createSchedule([courses[0][i]]);
                 if (sched != null && sched != false)
                 {
-                    result.schedule = null;
-                    result.classes = new Array();
-
-                    result.schedule = sched;
-                    result.classes.push(courses[0][i]);
-                    resultSet.push(result);
+                    var res = {'schedule': sched, 'classes': [courses[0][i]]};
+                    resultSet.push(res);
                 }
             }
             break;
@@ -82,13 +77,8 @@ function scheduleBuild()
                     sched = createSchedule([courses[0][i], courses[1][j]]);
                     if (sched != null && sched != false)
                     {
-                        result.schedule = null;
-                        result.classes = new Array();
-
-                        result.schedule = sched;
-                        result.classes.push(courses[0][i]);
-                        result.classes.push(courses[1][j]);
-                        resultSet.push(result);
+                        var res = {'schedule': sched, 'classes': [courses[0][i], courses[1][j]]};
+                        resultSet.push(res);
                     }
                 }
             }
@@ -103,14 +93,8 @@ function scheduleBuild()
                         sched = createSchedule([courses[0][i], courses[1][j], courses[2][k]]);
                         if (sched != null && sched != false)
                         {
-                            result.schedule = null;
-                            result.classes = new Array();
-
-                            result.schedule = sched;
-                            result.classes.push(courses[0][i]);
-                            result.classes.push(courses[1][j]);
-                            result.classes.push(courses[2][k]);
-                            resultSet.push(result);
+                            var res = {'schedule': sched, 'classes': [courses[0][i], courses[1][j], courses[2][k]]};
+                            resultSet.push(res);
                         }
                     }
                 }
@@ -127,15 +111,8 @@ function scheduleBuild()
                         {
                             sched = createSchedule([courses[0][i], courses[1][j], courses[2][k]]);
                             if (sched != null && sched != false) {
-                                result.schedule = null;
-                                result.classes = new Array();
-
-                                result.schedule = sched;
-                                result.classes.push(courses[0][i]);
-                                result.classes.push(courses[1][j]);
-                                result.classes.push(courses[2][k]);
-                                result.classes.push(courses[3][x]);
-                                resultSet.push(result);
+                                var res = {'schedule': sched, 'classes': [courses[0][i], courses[1][j], courses[2][k], courses[3][x]]};
+                                resultSet.push(res);
                             }
                         }
                     }
@@ -156,16 +133,8 @@ function scheduleBuild()
                                 sched = createSchedule([courses[0][i], courses[1][j], courses[2][k]]);
                                 if (sched != null && sched != false)
                                 {
-                                    result.schedule = null;
-                                    result.classes = new Array();
-
-                                    result.schedule = sched;
-                                    result.classes.push(courses[0][i]);
-                                    result.classes.push(courses[1][j]);
-                                    result.classes.push(courses[2][k]);
-                                    result.classes.push(courses[3][x]);
-                                    result.classes.push(courses[4][y]);
-                                    resultSet.push(result);
+                                    var res = {'schedule': sched, 'classes': [courses[0][i], courses[1][j], courses[2][k], courses[3][x], courses[4][y]]};
+                                    resultSet.push(res);
                                 }
                             }
                         }
@@ -189,17 +158,8 @@ function scheduleBuild()
                                     sched = createSchedule([courses[0][i], courses[1][j], courses[2][k]]);
                                     if (sched != null && sched != false)
                                     {
-                                        result.schedule = null;
-                                        result.classes = new Array();
-
-                                        result.schedule = sched;
-                                        result.classes.push(courses[0][i]);
-                                        result.classes.push(courses[1][j]);
-                                        result.classes.push(courses[2][k]);
-                                        result.classes.push(courses[3][x]);
-                                        result.classes.push(courses[4][y]);
-                                        result.classes.push(courses[5][z]);
-                                        resultSet.push(result);
+                                        var res = {'schedule': sched, 'classes': [courses[0][i], courses[1][j], courses[2][k], courses[3][x], courses[4][y], courses[5][z]]};
+                                        resultSet.push(res);
                                     }
                                 }
                             }
@@ -216,6 +176,12 @@ function scheduleBuild()
 
 function createSchedule(courses)
 {
+    //var string = '';
+    //for (var i = 0; i < courses.length; i++)
+    //{
+    //    string += courses[i].id + ' ';
+    //}
+    //console.log(string);
 //possible schedule to be built. 5 days a week
     var scheduleArray =  new Array(5);
 
@@ -300,6 +266,15 @@ function calculateTimeBlock(time) {
 function displaySchedules(resultSet)
 {
     console.log(resultSet);
+    for (var x = 0; x < resultSet.length; x++)
+    {
+        var poop = '';
+        for (var y = 0; y < resultSet[x].classes.length; y++)
+        {
+            poop += resultSet[x].classes[y].id + ' ';
+        }
+        console.log(poop);
+    }
     //Only display first five. I am tired. -BC
     var count = resultSet.length;
     for (var i = 0; i < (count > 5 ? 5 : count); i++)
