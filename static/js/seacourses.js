@@ -30,6 +30,11 @@ function calculateTimeBlock(time) {
     return row;
 }
 
+/**
+ * Schedule visualizer
+ * Will assist with time conflict detection later
+ * @constructor
+ */
 function Schedule() {
 
     this.schedule = [];
@@ -64,7 +69,23 @@ function Schedule() {
             columns.push(5);
         if (days.indexOf('S') > -1)
             columns.push(6);
+
+
+        /**
+         * Fill in the class boxes
+         */
+        for (var i = startRow; i < endRow; i++) {
+            var $row = $('.schedule-row:eq(' + i + ')');
+
+            $.each(columns, function(index, value) {
+                $row.find('.schedule-cell:eq(' + value + ')').css('background-color', 'green');
+            });
+
+
+        }
+
     });
+
 
 
 }
