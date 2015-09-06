@@ -31,6 +31,8 @@ function Schedule() {
         this.schedule.push(day);
     }
 
+    selectedCourses.push(courses[0]);
+
     $.each(selectedCourses, function(index, value) {
         var startRow = calculateTimeBlock(value.start);
 
@@ -57,15 +59,24 @@ function Schedule() {
         /**
          * Fill in the class boxes
          */
-        for (var i = startRow; i < endRow; i++) {
-            var $row = $('.schedule-row:eq(' + i + ')');
+        //for (var i = startRow; i < endRow; i++) {
+            var $row = $('.schedule-row:eq(' + startRow + ')');
 
-            $.each(columns, function(index, value) {
-                $row.find('.schedule-cell:eq(' + value + ')').css('background-color', 'green');
+            $.each(columns, function(index, col) {
+                var $item = $('<div>');
+                $item.addClass('schedule-item');
+                $item.css('height', 30*(endRow - startRow));
+
+                var $itemInner = $('<div>');
+                $item.append(value.name);
+
+                console.log($row);
+                console.log($item);
+                $row.find('.schedule-cell:eq(' + col + ')').append($item);
             });
 
 
-        }
+        //}
 
     });
 
