@@ -348,8 +348,13 @@ function toggleClass(obj)
     var index = selectedCourses.indexOf(course);
     if (index != -1)
         selectedCourses.splice(index, 1);
-    else
-        selectedCourses.push(course);
+    else {
+        if (!isConflict(course)) {
+            selectedCourses.push(course);
+        } else {
+            // prevent checking
+        }
+    }
     redrawSelectedClasses();
 }
 
@@ -487,3 +492,66 @@ function getAllDeptCodes()
 //        multiCount = multiCount * searchQueries[a].length;
 //    }
 //}
+
+
+/**
+ * Check course for time conflict with selected courses
+ * Probably a more efficient way to do this, which will be done at a later time
+ *
+ * @param course course to check
+ */
+function isConflict(course) {
+    var schedule = [];
+
+    // temporary push
+    selectedCourses.push(course);
+
+    // start with a blank schedule
+    for (var i = 0; i < 7; i++) {
+        var day = [];
+        for (var j = 0; j < 28; j++)
+            day.push(0);
+
+        schedule.push(day);
+    }
+
+
+    for (i = 0; i < selectedCourses.length; i++) {
+        var startRow = calculateTimeBlock(selectedCourses[i].start);
+
+        var endRow = calculateTimeBlock(selectedCourses[i].end);
+        var columns = [];
+
+        var days = selectedCourses[i].days;
+        if (days.indexOf('SU') > -1)
+            columns.push(0);
+        if (days.indexOf('M') > -1)
+            columns.push(1);
+        if (days.indexOf('TU') > -1)
+            columns.push(2);
+        if (days.indexOf('W') > -1)
+            columns.push(3);
+        if (days.indexOf('TH') > -1)
+            columns.push(4);
+        if (days.indexOf('F') > -1)
+            columns.push(5);
+        if (days.indexOf('S') > -1)
+            columns.push(6);
+
+
+        for (j = 0; j < columns.length; j++) {
+            for (var k = startRow; k < endRow; k++) {
+
+                if (schedule[columns[j]][k] !== 0) {
+                    selectedCourses.pop();
+                    return true; // conflict found!
+                } else
+                    schedule[columns[j]][k] = 1;
+            }
+        }
+
+    }
+
+    selectedCourses.pop();
+    return false;
+}
