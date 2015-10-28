@@ -37,7 +37,7 @@ def saveToDatabase(data):
     db = client.seacourses
 
     #Get the collection
-    collection = db.courseInfo
+    collection = db.s16courses
 
     #Save a new document into the collection
     collection.insert_one(data)
@@ -47,7 +47,7 @@ def saveToDatabase(data):
     #     print(data)
 
 # Open the text doc with all the class information
-textDoc = open('../schedules/fall2015.txt', 'r')
+textDoc = open('../schedules/spring2016.txt', 'r')
 currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '', 'endTime': '',
                'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': ''}
 for i in range(0, 10000):

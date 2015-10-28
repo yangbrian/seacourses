@@ -19,7 +19,7 @@ app = Flask(__name__)
 @app.route('/search')
 def connect():
     client = MongoClient("mongodb://localhost:27017")
-    cursor = client.seacourses.courseInfo.find()
+    cursor = client.seacourses.s16courses.find()
 
     courses = []
     for course in cursor:
