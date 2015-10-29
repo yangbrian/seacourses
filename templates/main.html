@@ -1,433 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300' rel='stylesheet' type='text/css'>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
-        <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="/static/js/bootstrap.min.js"></script>
 
-        <script src="/static/js/seacourses.js"></script>
-        <meta charset="UTF-8">
-        <title>Seacourses</title>
+    <script src="/static/js/seacourses.js"></script>
+    <meta charset="UTF-8">
+    <title>Seacourses</title>
     </head>
     <body>
         <div class="container">
             <h2 id="heading">SeaCourses</h2>
-            <br>
-            <p>What classes do you want to take?</p>
-            <br>
-            <div class="input-group">
-                <div class="input-group-addon">Search by</div>
-                <select name="searchBox" id="searchBox" class="form-control">
-                    <option value="selectDropDown">Select your option</option>
-                    <option name="departmentDropDown" value="department" class="searchList">Department</option>
-                    <option name="courseCodeDropDown" value="courseCode" class="searchList">Code</option>
-{#                    <option name="courseNameDropDown" value="courseName" class="searchList">Name</option>#}
-                    <option name="decDropDown" value="dec" class="searchList">DEC</option>
-                    <option name="sbcDropDown" value="sbc" class="searchList">SBC</option>
-{#                    <option name="professorDropDown" value="professor" class="searchList">Professor</option>#}
-                    <option name="daysDropDown" value="days" class="searchList">Days</option>
-{#                    <option name="startDropDown" value="start" class="searchList">Start</option>#}
-{#                    <option name="endDropDown" value="end" class="searchList">End</option>#}
-                </select>
-            </div>
-            <!--<input type = "text" name="searchCriteria"> <input type="submit" value="Submit">-->
 
-            <br>
+            <p>
+                Welcome to SeaCourses! Build the perfect schedule by looking for your courses below. Click a row on the table to toggle the course.
+            </p>
 
-            <div class="searchField form-inline" id="departmentSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">Department</div>
-                    <input class="form-control inputField" type="text" name="departmentField" placeholder="AMS">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="courseCodeSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">Course Code</div>
-                    <input class="form-control inputField" type="text" name="courseCodeField" placeholder="100">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="courseNameSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">Course Name</div>
-                    <input class="form-control inputField" type="text" name="courseNameField" placeholder="Intro to Statistics">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="decSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">DEC</div>
-                    <input class="form-control inputField" type="text" name="decField" placeholder="A">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="sbcSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">SBC</div>
-                    <input class="form-control inputField" type="text" name="sbcField" placeholder="SBS">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="professorSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">Professor</div>
-                    <input class="form-control inputField" type="text" name="professorField" placeholder="Daniel Kim">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="daysSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">Days</div>
-                    <input class="form-control inputField" type="text" name="daysField" placeholder="TUTH">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="startSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">Start Time</div>
-                    <input class="form-control inputField" type="text" name="startField" placeholder="8:00AM">
-                </div>
-            </div>
-            <div class="searchField form-inline" id="endSearch" style="display: none">
-                <button type="button" class="btn btn-default" onclick="hideSearchField(this);">&#10006</button>
-                <div class="input-group fieldInput">
-                    <div class="input-group-addon fieldName">End Time</div>
-                    <input class="form-control inputField" type="text" name="endField" placeholder="4:00PM">
-                </div>
-            </div>
+            <table id="course-table" class="table table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th>ID</th>
+                        <th>Dept</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Professor</th>
+                        <th>DEC</th>
+                        <th>SBCs</th>
+                        <th>Type</th>
+                        <th>Days</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+            </table>
 
-            <br><br>
 
-            <input type="submit" value="Search" id="searchButton" class="btn btn-default" onclick="search()">
-            <input type="submit" value="Clear all Fields" id="clearButton" class="btn btn-default">
-            <input type="submit" value="See all courses" id="allCoursesButton" class="btn btn-default" onclick="showAllCourses()">
-
-            <br><br>
-
-            <div class="row">
-                <div class="span8">
-                    <table id="bigTable" class="table table-hover" >
-                        <tr>
-                            <th id="checkHead"></th>
-                            <th id="courseId">ID</th>
-                            <th id="departmentHead">Dept</th>
-                            <th id="courseCodeHead">Code</th>
-                            <th id="courseNameHead">Name</th>
-                            <th id="decHead">DEC</th>
-                            <th id="sbcHead">SBC</th>
-                            <th id="professorHead">Professor</th>
-                            <th id="courseType">Type</th>
-                            <th id="daysHead">Days</th>
-                            <th id="startHead">Start</th>
-                            <th id="endHead">End</th>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <input type="submit" value="Previous" id="nextButton" class="btn btn-default">
-            <input type="submit" value="Next" id="previousButton" class="btn btn-default">
-
-            <br><br>
-
-        </div>
-        <div id="classListContainer" class="sidebar container">
-            <h3>Selected Courses</h3>
-            <ul id="classList" class="list-group">
-            </ul>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#scheduleModal">
-                Show Selected Schedule
-            </button>
-
-            <button type="button" id="buildButton" class="btn btn-info btn-lg" onclick="window.location.replace('/builder');">
-                Auto-build schedule (pre-alpha)
-            </button>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document" style="width: 1024px">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Your Schedule</h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <body>
-
-                        <div id="schedule">
-                            <div class="schedule-row">
-                                <div class="schedule-cell">8:00 AM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row test">
-                                <div class="schedule-cell">9:00 AM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">10:00 AM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">11:00 AM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">12:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">1:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">2:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">3:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">4:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">5:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">6:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">7:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">8:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell">9:00 PM</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                            <div class="schedule-row">
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </body>
 </html>
