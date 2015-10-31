@@ -27,7 +27,7 @@ $(document).ready(function() {
                     .append($('<td>').addClass('start').text(course.start))
                     .append($('<td>').addClass('end').text(course.end))
                     .append($('<td>').addClass('location').text(course.loc))
-                    .css('border-color', '#' + course.color)
+                    .css('border-color', course.color)
             )
 
         });

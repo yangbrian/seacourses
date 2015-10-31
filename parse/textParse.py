@@ -11,11 +11,28 @@
 import csv
 from pymongo import MongoClient
 
+
+# Generate a different color for each dept
+# Used for the table border
+def generatecolor(dept):
+    # double length of string for a wider range of colors
+    dept += dept
+
+    hashcode = 0
+
+    for i in dept:
+        hashcode = ord(i) + ((hashcode << 5) - hashcode)
+
+    color = "{0:x}".format((hashcode & 0xFFFFFF))
+    return "00000"[0:6 - len(color)] + color
+
+
 def is3LetterWord(str):
     if len(str) != 3:
         return False
     else:
         return str.isalpha()
+
 
 def is3Numbers(str):
     if len(str) != 3:
@@ -23,28 +40,31 @@ def is3Numbers(str):
     else:
         return str.isnumeric()
 
+
 def is5Numbers(str):
     if len(str) != 5:
         return False
     else:
         return str.isnumeric()
 
+
 def saveToDatabase(data):
-    #Connect to mongodb client
+    # Connect to mongodb client
     client = MongoClient('localhost', 27017)
 
-    #Get the database
+    # Get the database
     db = client.seacourses
 
-    #Get the collection
+    # Get the collection
     collection = db.s16courses
 
-    #Save a new document into the collection
+    # Save a new document into the collection
     collection.insert_one(data)
 
     # if len(data['name']) == 0:
     # if data['deptCodeNum'] == 'AAS327':
     #     print(data)
+
 
 # Open the text doc with all the class information
 textDoc = open('../schedules/spring2016.txt', 'r')
@@ -59,7 +79,8 @@ for i in range(0, 10000):
         # Disregard everything after a '#', until a DEPT code comes up
         # '_id' refers to the course code. It will be the unique key for mongoDB
         if split[0].find('#') != -1:
-            currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '', 'endTime': '',
+            currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '',
+                           'endTime': '',
                            'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': ''}
 
         # Department code - start of a new class
@@ -67,7 +88,8 @@ for i in range(0, 10000):
             deptCodeNum = split[0] + split[1]
             if currentData['deptCodeNum'] != deptCodeNum:
                 currentData = {'_id': 0, 'deptCodeNum': deptCodeNum, 'name': '', 'prof': '', 'days': '',
-                               'startTime': '', 'endTime': '', 'loc': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '',
+                               'startTime': '', 'endTime': '', 'loc': '', 'dec': '', 'sbcs': '', 'type': '',
+                               'prereqs': '',
                                'credits': ''}
                 if length > 2:
                     if (len(split[2]) == 1 and textString.find('Credit') == -1) or len(split[2]) == 2:
@@ -75,7 +97,8 @@ for i in range(0, 10000):
                         nextLine = textDoc.readline()
                         while len(nextLine.split()) == 0:
                             nextLine = textDoc.readline()
-                        index = nextLine.find('Advisory') if nextLine.find('Advisory') != -1 else nextLine.find('Prerequisite')
+                        index = nextLine.find('Advisory') if nextLine.find('Advisory') != -1 else nextLine.find(
+                            'Prerequisite')
                         if index == -1:
                             currentData['name'] = nextLine
                         else:
@@ -105,7 +128,7 @@ for i in range(0, 10000):
             for k in range(3, len(split)):
                 currentData['sbcs'] += split[k]
 
-        #Prereqs line
+        # Prereqs line
         elif split[0].find('Prereq') != -1:
             for k in range(1, len(split)):
                 currentData['prereqs'] += split[k] + ' '
@@ -134,7 +157,6 @@ for i in range(0, 10000):
             else:
                 currentData['startTime'] += 'AM'
 
-
             if length > 4:
                 if not split[5].isupper():
                     currentData['prof'] = split[5]
@@ -148,6 +170,6 @@ for i in range(0, 10000):
                         count += 1
                     for word in split[count:]:
                         currentData['prof'] += word + ' '
+            currentData['color'] = '#' + generatecolor(currentData['deptCodeNum'][:3])
             saveToDatabase(currentData)
 print("Done!")
-
