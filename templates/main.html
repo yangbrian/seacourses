@@ -15,7 +15,7 @@
 
     <script src="/static/js/seacourses.js"></script>
     <meta charset="UTF-8">
-    <title>Seacourses</title>
+    <title>SeaCourses</title>
     </head>
     <body>
         <div class="container">
@@ -24,6 +24,30 @@
             <p>
                 Welcome to SeaCourses! Build the perfect schedule by looking for your courses below. Click a row on the table to toggle the course.
             </p>
+
+            <div id="search">
+                <p>Todo: More search fields with options like greater than or equal to coming later.</p>
+
+                <form id="course-search" class="form-group">
+                    <div class="input-group course-search">
+                        <span class="input-group-addon" id="deptCodeNum-addon">Course Code</span>
+                        <input type="text" name="deptCodeNum" class="form-control" placeholder="CHE131" aria-describedby="deptCodeNum-addon">
+                    </div>
+
+                    <div class="input-group course-search">
+                        <span class="input-group-addon" id="dec-addon">DEC</span>
+                        <input type="text" name="dec" class="form-control" placeholder="G" aria-describedby="dec-addon">
+                    </div>
+                </form>
+            </div>
+
+            <div class="pages" id="table-top">
+                <ul class="nav-pages">
+                    <li class="prev-page"><button class="btn">Previous</button></li>
+                    <li class="count"></li>
+                    <li class="next-page"><button class="btn">Next</button></li>
+                </ul>
+            </div>
 
             <table id="course-table" class="table table-hover">
                 <thead>
@@ -44,6 +68,13 @@
                 </thead>
             </table>
 
+            <div class="pages" id="table-bottom">
+                <ul class="nav-pages">
+                    <li class="prev-page"><button class="btn">Previous</button></li>
+                    <li class="count"></li>
+                    <li class="next-page"><button class="btn">Next</button></li>
+                </ul>
+            </div>
 
         </div>
     </body>

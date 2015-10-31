@@ -3,6 +3,18 @@ body {
     font-weight: 300;
 }
 
+.btn{
+    background: transparent;
+    color: #000;
+    -webkit-transition: background .2s ease-in-out, border .2s ease-in-out;
+    -moz-transition: background .2s ease-in-out, border .2s ease-in-out;
+    -ms-transition: background .2s ease-in-out, border .2s ease-in-out;
+    -o-transition: background .2s ease-in-out, border .2s ease-in-out;
+    transition: background .2s ease-in-out, border .2s ease-in-out;
+    border-color: #aaa;
+
+}
+
 table tr, table th {
     text-align: center;
     transition: all 0.25s ease-in;
@@ -53,4 +65,37 @@ tr.course:hover {
 
 .table-hover .selected-course:hover {
     background-color: rgba(137, 241, 138, 0.9);
+}
+
+.pages {
+    float: right;
+}
+
+.pages ul {
+    list-style: none;
+}
+
+.pages ul li {
+    display: inline;
+    padding: 5px;
+}
+
+.count {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+#search {
+    padding: 10px 0;
+}
+
+#search .input-group {
+    max-width: 250px;
 }

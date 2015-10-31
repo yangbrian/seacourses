@@ -6,22 +6,25 @@
     :author: Brian Chen, Kevin Li, Brian Yang
 """
 
-from flask import Flask, render_template, jsonify, Response
+from flask import Flask, render_template, jsonify, Response, request
 from pymongo import MongoClient
-import urllib
-from urllib import request
 import json
 from classes.course import Course
 
 app = Flask(__name__)
 
 
-@app.route('/search', defaults={'page': 0})
+@app.route('/search/', defaults={'page': 0})
 @app.route('/search/<int:page>')
 def connect(page):
 
     client = MongoClient("mongodb://localhost:27017")
-    cursor = client.seacourses.s16courses.find().sort([('deptCodeNum', 1)]).limit(50).skip(page * 50)
+    cursor = client.seacourses.s16courses.find({
+        'deptCodeNum': {'$regex': '^' + request.args.get('deptCodeNum', '')},
+        'prof': {'$regex': '^' + request.args.get('prof', '')},
+        'dec': {'$regex': '^' + request.args.get('dec', '')},
+        'days': {'$regex': '^' + request.args.get('days', '')},
+    }).sort([('deptCodeNum', 1)])
 
     courses = []
     for course in cursor:
