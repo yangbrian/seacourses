@@ -16,10 +16,12 @@ from classes.course import Course
 app = Flask(__name__)
 
 
-@app.route('/search')
-def connect():
+@app.route('/search', defaults={'page': 0})
+@app.route('/search/<int:page>')
+def connect(page):
+
     client = MongoClient("mongodb://localhost:27017")
-    cursor = client.seacourses.s16courses.find()
+    cursor = client.seacourses.s16courses.find().sort([('deptCodeNum', 1)]).limit(50).skip(page * 50)
 
     courses = []
     for course in cursor:
