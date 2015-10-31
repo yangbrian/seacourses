@@ -29,6 +29,7 @@ $(document).ready(function() {
             });
 
             count = courses.length;
+            page = 0;
             displayCourses();
 
         });
@@ -88,12 +89,18 @@ $(document).ready(function() {
     });
 
     $('#course-search').on('submit', function(e) {
-        console.log("Search");
         e.preventDefault();
         loadCourses($(this).serialize());
+
+        $('.course-field').each(function() {
+            if ($(this).val() != '')
+                $(this).css('background-color', '#bce6ff');
+            else
+                $(this).css('background-color', '');
+        });
     });
 
-    $('.course-search').on('keypress', function(e) {
+    $('.course-field').on('keypress', function(e) {
         if (e.which == 13)
             $('#course-search').submit();
     });
