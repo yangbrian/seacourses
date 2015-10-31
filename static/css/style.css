@@ -13,11 +13,22 @@ table tr:hover {
 }
 
 tr.course {
-    border-left: 3px solid #5463c3;
+    border-left: 4px solid #5463c3;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+tr.course td {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 tr.course:hover {
-    border-left: 10px solid #5463c3;
+    border-left: 15px solid #5463c3;
 }
 
 .id, .dept, .code, .dec {
