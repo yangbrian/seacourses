@@ -41,11 +41,15 @@
                 </form>
             </div>
 
+            <div id="course-toolbar">
+                <button id="display-schedule" class="btn btn-danger" data-toggle="modal" data-target="#scheduleModal">Display Schedule</button>
+            </div>
+
             <div class="pages" id="table-top">
                 <ul class="nav-pages">
-                    <li class="prev-page"><button class="btn">Previous</button></li>
+                    <li class="prev-page"><button class="btn btn-primary">Previous</button></li>
                     <li class="count"></li>
-                    <li class="next-page"><button class="btn">Next</button></li>
+                    <li class="next-page"><button class="btn btn-primary">Next</button></li>
                 </ul>
             </div>
 
@@ -70,12 +74,285 @@
 
             <div class="pages" id="table-bottom">
                 <ul class="nav-pages">
-                    <li class="prev-page"><button class="btn">Previous</button></li>
+                    <li class="prev-page"><button class="btn btn-primary">Previous</button></li>
                     <li class="count"></li>
-                    <li class="next-page"><button class="btn">Next</button></li>
+                    <li class="next-page"><button class="btn btn-primary">Next</button></li>
                 </ul>
             </div>
 
-        </div>
+            <!-- Weekly View -->
+            <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="Selected Courses - Weekly View">
+                <div class="modal-dialog" role="document" style="width: 1024px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Your Schedule</h4>
+                            <p><strong>This does not work in Safari and probably other browsers at the moment. It will be fixed at a later time. Please use Google Chrome for now. Thanks.</strong></p>
+                        </div>
+                        <div class="modal-body">
+
+                            <div id="schedule">
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">8:00 AM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row test">
+                                    <div class="schedule-cell">9:00 AM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">10:00 AM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">11:00 AM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">12:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">1:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">2:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">3:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">4:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">5:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">6:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">7:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">8:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell">9:00 PM</div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                                <div class="schedule-row">
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                    <div class="schedule-cell"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+             </div> <!-- /schedule modal -->
+        </div> <!-- /page container -->
     </body>
 </html>

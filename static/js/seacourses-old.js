@@ -1,4 +1,12 @@
 /**
+ * Legacy script originally made at PennApps.
+ *
+ * This file is being written in ./seacourses.js
+ *
+ * Do not use this file.
+ */
+
+/**
  * Main script for SeaCourses
  */
 function calculateTimeBlock(time) {
