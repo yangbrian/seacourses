@@ -14,7 +14,7 @@ from pymongo import MongoClient
 
 # Generate a different color for each dept
 # Used for the table border
-def generatecolor(dept):
+def generate_color(dept):
     # double length of string for a wider range of colors
     dept += dept
 
@@ -27,28 +27,28 @@ def generatecolor(dept):
     return "00000"[0:6 - len(color)] + color
 
 
-def is3LetterWord(str):
+def is_3letter_word(str):
     if len(str) != 3:
         return False
     else:
         return str.isalpha()
 
 
-def is3Numbers(str):
+def is_3numbers(str):
     if len(str) != 3:
         return False
     else:
         return str.isnumeric()
 
 
-def is5Numbers(str):
+def is_5numbers(str):
     if len(str) != 5:
         return False
     else:
         return str.isnumeric()
 
 
-def saveToDatabase(data):
+def save_to_db(data):
     # Connect to mongodb client
     client = MongoClient('localhost', 27017)
 
@@ -65,11 +65,14 @@ def saveToDatabase(data):
     # if data['deptCodeNum'] == 'AAS327':
     #     print(data)
 
-
 # Open the text doc with all the class information
 textDoc = open('../schedules/spring2016.txt', 'r')
+
 currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '', 'endTime': '',
-               'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': ''}
+               'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': '', 'centralLink': 0}
+hasCentral = False
+centralCount = 0
+
 for i in range(0, 10000):
     # Bad practice above, I know. I'm too lazy to change to a "while there is a next line" thing...lol
     textString = textDoc.readline()
@@ -81,10 +84,12 @@ for i in range(0, 10000):
         if split[0].find('#') != -1:
             currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '',
                            'endTime': '',
-                           'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': ''}
+                           'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': '', 'centralLink': 0}
 
         # Department code - start of a new class
-        elif is3LetterWord(split[0]) and is3Numbers(split[1]):
+        elif is_3letter_word(split[0]) and is_3numbers(split[1]):
+            hasCentral = False
+
             deptCodeNum = split[0] + split[1]
             if currentData['deptCodeNum'] != deptCodeNum:
                 currentData = {'_id': 0, 'deptCodeNum': deptCodeNum, 'name': '', 'prof': '', 'days': '',
@@ -104,7 +109,7 @@ for i in range(0, 10000):
                         else:
                             currentData['name'] = nextLine[:index]
                             currentData['prereqs'] = '' if nextLine.find('Advisory') != -1 else nextLine[index + 15:]
-                            print(currentData)
+                            # print(currentData)
                     else:
                         currentData['name'] = ''
                         count = 2
@@ -121,6 +126,39 @@ for i in range(0, 10000):
                         currentData['name'] = textDoc.readline()
                     else:
                         currentData['name'] = nextLine
+
+        # Has a central lecture (multiple labs/recits, one lecture class)
+        elif split[0].find('LEC') != -1:
+            centralCount += 1
+            hasCentral = True
+
+            time = split[3]
+            startTime = time[:time.find('-')]
+            endTime = time[time.find('-')+1:]
+            prof = ''
+            if len(split) > 6:
+                for z in range(7, len(split)):
+                    prof += split[z] + ' '
+
+            newData = {'_id': centralCount,
+                       'deptCodeNum': currentData['deptCodeNum'],
+                       'name': currentData['name'],
+                       'type': 'LEC',
+                       'section': split[1],
+                       'days': split[2],
+                       'startTime': startTime,
+                       'endTime': endTime,
+                       'loc': split[4] + ' ' + split[5] if len(split) > 6 else '',
+                       'prof': prof,
+                       'room': '',
+                       'dec': currentData['dec'],
+                       'sbcs': currentData['sbcs'],
+                       'prereqs': '',
+                       'credits': '',
+                       'centralLink': '',
+                       'color': generate_color(currentData['deptCodeNum'][:3])}
+
+            save_to_db(newData)
 
         # Credit and SBC Line
         elif split[0].find('Credit') != -1:
@@ -149,6 +187,8 @@ for i in range(0, 10000):
             currentData['days'] = split[3]
             currentData['startTime'] = split[4][0:5]
             currentData['endTime'] = split[4][6:]
+            if hasCentral:
+                currentData['centralLink'] = centralCount
             if currentData['endTime'].find('PM') != -1:
                 if currentData['endTime'] == '12:50PM' or currentData['endTime'] == '12:23PM' or currentData['endTime'] == '12:55PM':
                     currentData['startTime'] += 'AM'
@@ -170,6 +210,6 @@ for i in range(0, 10000):
                         count += 1
                     for word in split[count:]:
                         currentData['prof'] += word + ' '
-            currentData['color'] = '#' + generatecolor(currentData['deptCodeNum'][:3])
-            saveToDatabase(currentData)
+            currentData['color'] = '#' + generate_color(currentData['deptCodeNum'][:3])
+            save_to_db(currentData)
 print("Done!")
