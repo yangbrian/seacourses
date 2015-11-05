@@ -11,7 +11,6 @@
             </list>
           </option>
           <option name="userDatabase" value="seacourses" />
-          <option name="userDatabaseAsMySingleDatabase" value="true" />
         </ServerConfiguration>
       </list>
     </option>
