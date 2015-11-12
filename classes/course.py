@@ -17,3 +17,4 @@ class Course:
         self.dec = course['dec']
         self.sbcs = course['sbcs']
         self.color = course['color']
+        self.lec = course.get('centralLink', '')

@@ -49,21 +49,22 @@ def is_5numbers(str):
 
 
 def save_to_db(data):
-    # Connect to mongodb client
-    client = MongoClient('localhost', 27017)
+    if data['deptCodeNum'] != '':
+        # Connect to mongodb client
+        client = MongoClient('localhost', 27017)
 
-    # Get the database
-    db = client.seacourses
+        # Get the database
+        db = client.seacourses
 
-    # Get the collection
-    collection = db.s16courses
+        # Get the collection
+        collection = db.s16courses
 
-    # Save a new document into the collection
-    collection.insert_one(data)
+        # Save a new document into the collection
+        collection.insert_one(data)
 
-    # if len(data['name']) == 0:
-    # if data['deptCodeNum'] == 'AAS327':
-    #     print(data)
+        # if len(data['name']) == 0:
+        # if data['deptCodeNum'] == 'AAS327':
+        #     print(data)
 
 # Open the text doc with all the class information
 textDoc = open('../schedules/spring2016.txt', 'r')
@@ -143,12 +144,12 @@ for i in range(0, 10000):
             newData = {'_id': centralCount,
                        'deptCodeNum': currentData['deptCodeNum'],
                        'name': currentData['name'],
-                       'type': 'LEC',
+                       'type': 'LEC ' + split[1],
                        'section': split[1],
                        'days': split[2],
                        'startTime': startTime,
                        'endTime': endTime,
-                       'loc': split[4] + ' ' + split[5] if len(split) > 6 else '',
+                       'loc': '',
                        'prof': prof,
                        'room': '',
                        'dec': currentData['dec'],
@@ -158,6 +159,20 @@ for i in range(0, 10000):
                        'centralLink': '',
                        'color': generate_color(currentData['deptCodeNum'][:3])}
 
+            count = 4
+            while split[count].isupper() and split[count] != 'TBA':
+                newData['loc'] = newData['loc'] + split[count] + ' '
+                count += 1
+            if split[count].isnumeric():
+                newData['loc'] += split[count]
+                count += 1
+            if len(newData['loc']) == 0:
+                newData['loc'] = 'TBA'
+
+            print(newData['deptCodeNum'] + " " + newData['loc'])
+
+            newData['loc'] = newData['loc'].title()
+            newData['color'] = '#' + generate_color(newData['deptCodeNum'][:3])
             save_to_db(newData)
 
         # Credit and SBC Line
@@ -210,6 +225,7 @@ for i in range(0, 10000):
                         count += 1
                     for word in split[count:]:
                         currentData['prof'] += word + ' '
+            currentData['loc'] = currentData['loc'].title()
             currentData['color'] = '#' + generate_color(currentData['deptCodeNum'][:3])
             save_to_db(currentData)
 print("Done!")

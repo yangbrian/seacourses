@@ -1,6 +1,10 @@
 /**
  * SeaCourses
  *
+ * Brian Yang
+ * Brian Chen
+ * Kevin Li
+ *
  */
 
 $(document).ready(function() {
@@ -16,6 +20,8 @@ $(document).ready(function() {
     var count = 0;
 
     var page = 0;
+
+    var recSelected = false;
 
     // schedule object used for displaying weekly view and selecting courses
     var schedule = new Schedule();
@@ -55,11 +61,15 @@ $(document).ready(function() {
 
         countDisplay.text((page * 50 + 1) + ' - ' + Math.min((page + 1) * 50, courses.length) + ' of ' + courses.length);
 
+
+        console.log(schedule.selectedCourses);
+
         for (var i = page * 50; i < (page + 1) * 50 && i < courses.length; i++) {
             var course = courses[i];
+
             table.append(
                 $('<tr>').addClass('course')
-                    .append($('<td>').addClass('id').text(course.id))
+                    .append($('<td>').addClass('id').text(course.id < 10000 ? '-' : course.id))
                     .append($('<td>').addClass('dept').text(course.dept))
                     .append($('<td>').addClass('code').text(course.code))
                     .append($('<td>').addClass('name').text(course.name))
@@ -73,6 +83,7 @@ $(document).ready(function() {
                     .append($('<td>').addClass('location').text(course.loc))
                     .css('border-color', course.color)
                     .attr('data-id', course.id)
+                    .attr('data-lec', course.lec)
                     .addClass($.inArray(course, schedule.selectedCourses) > -1 ? 'selected-course' : '')
             )
         }
@@ -82,12 +93,31 @@ $(document).ready(function() {
     loadCourses();
 
     table.on('click', 'tr.course', function() {
-       $(this).toggleClass('selected-course');
+
+        // is central lecture
+        if($(this).attr('data-id') < 10000)
+            return;
+
+        $(this).toggleClass('selected-course');
+
+        if ($(this).attr('data-lec') != '') {
+
+            $('tr.course[data-id=' + $(this).attr('data-lec') + ']').toggleClass('selected-course');
+
+            // add the lecture here to account for the fact that it might be on another page
+            if ($(this).hasClass('selected-course'))
+                schedule.addCourse(courses[courseIndex[$(this).attr('data-lec')]]);
+            else
+                schedule.removeCourse(courses[courseIndex[$(this).attr('data-lec')]]);
+
+        }
+
 
         if ($(this).hasClass('selected-course'))
             schedule.addCourse(courses[courseIndex[$(this).attr('data-id')]]);
         else
             schedule.removeCourse(courses[courseIndex[$(this).attr('data-id')]]);
+
     });
 
     $('.next-page').on('click', function() {
@@ -196,13 +226,21 @@ Schedule.prototype.showSchedule = function() {
         $.each(columns, function(index, col) {
             var $item = $('<div>');
             $item.addClass('schedule-item');
-            $item.css('height', 30*(endRow - startRow));
+            $item.css('height', 45*(endRow - startRow));
 
             var $itemInner = $('<div>');
-            $itemInner.append(value.dept);
-            $itemInner.append(value.code);
-            $itemInner.append('<br>');
-            $itemInner.append(value.name);
+            $itemInner
+                .append('<strong>' + value.dept + value.code + '</strong>')
+                .append('<br>')
+                .append(value.name)
+                .append('<br>')
+                .append(value.start + " - " + value.end)
+                .append('<br>')
+                .append(value.prof)
+                .append('<br>')
+                .append(value.loc)
+                .addClass('schedule-item-content');
+
             $item.append($itemInner);
             $row.find('.schedule-cell:eq(' + col + ')').append($item);
         });
@@ -220,10 +258,18 @@ Schedule.prototype.calculateTimeBlock = function(time) {
     // break the time string into parts
     var matches = time.match(/(\d{1,2}):(\d{2})([AP]M)/);
 
-    // time = :00 means its right on the hour, no class ends right on the hour
+    // time = :00 means its right on the hour
     // time = :53 means it ends right before the hour, so +1. No class starts at :53.
     // time = :30 means it starts at half hour. No class ends then.
     // anything else is considered half hour (:20 or :23)
+
+    var pmOffset = (
+        parseInt(matches[1]) + (
+            (matches[3] == 'AM' && parseInt(matches[1]) == 12) ||
+            (matches[3] == 'PM' && parseInt(matches[1]) != 12)
+                ? 12 : 0
+        )
+    );
 
     return ((
 
@@ -234,7 +280,7 @@ Schedule.prototype.calculateTimeBlock = function(time) {
             + (matches[2] == '00' ? 0 : // starts on the hour
                 (matches[2] == '53' || matches[2] == '50') ? 1 :  // ends before the hour
                     .5)
-        ) - 8) * 2;
+        ) - 8) * 2 + 1;
 };
 
 /**
