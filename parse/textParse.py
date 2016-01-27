@@ -8,7 +8,6 @@
     textParse.py - this script will read the text file (converted from a pdf) of SBU course listings,
         parse each line into relevant information, and write into mongodb
 """
-import csv
 from pymongo import MongoClient
 
 
@@ -64,7 +63,7 @@ def save_to_db(data):
 
         # if len(data['name']) == 0:
         # if data['deptCodeNum'] == 'AAS327':
-        #     print(data)
+        print(data)
 
 # Open the text doc with all the class information
 textDoc = open('../schedules/spring2016.txt', 'r')
@@ -82,13 +81,13 @@ for i in range(0, 10000):
     if length > 1:
         # Disregard everything after a '#', until a DEPT code comes up
         # '_id' refers to the course code. It will be the unique key for mongoDB
-        if split[0].find('#') != -1:
-            currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '',
-                           'endTime': '',
-                           'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': '', 'centralLink': 0}
+        # if split[0].find('#') != -1:
+        #     currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '',
+        #                    'endTime': '',
+        #                    'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': '', 'centralLink': 0}
 
         # Department code - start of a new class
-        elif is_3letter_word(split[0]) and is_3numbers(split[1]):
+        if is_3letter_word(split[0]) and is_3numbers(split[1]):
             hasCentral = False
 
             deptCodeNum = split[0] + split[1]
@@ -98,6 +97,7 @@ for i in range(0, 10000):
                                'prereqs': '',
                                'credits': ''}
                 if length > 2:
+                    # Has the DEC on the same line
                     if (len(split[2]) == 1 and textString.find('Credit') == -1) or len(split[2]) == 2:
                         currentData['dec'] = split[2]
                         nextLine = textDoc.readline()
@@ -169,7 +169,7 @@ for i in range(0, 10000):
             if len(newData['loc']) == 0:
                 newData['loc'] = 'TBA'
 
-            print(newData['deptCodeNum'] + " " + newData['loc'])
+            # print(newData['deptCodeNum'] + " " + newData['loc'])
 
             newData['loc'] = newData['loc'].title()
             newData['color'] = '#' + generate_color(newData['deptCodeNum'][:3])
@@ -212,7 +212,7 @@ for i in range(0, 10000):
             else:
                 currentData['startTime'] += 'AM'
 
-            if length > 4:
+            if length > 4 and textString.find('TBA') == -1:
                 if not split[5].isupper():
                     currentData['prof'] = split[5]
                 elif split[5] != 'TBA':
@@ -225,6 +225,7 @@ for i in range(0, 10000):
                         count += 1
                     for word in split[count:]:
                         currentData['prof'] += word + ' '
+
             currentData['loc'] = currentData['loc'].title()
             currentData['color'] = '#' + generate_color(currentData['deptCodeNum'][:3])
             save_to_db(currentData)
