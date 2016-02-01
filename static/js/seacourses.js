@@ -95,8 +95,9 @@ $(document).ready(function() {
     table.on('click', 'tr.course', function() {
 
         // is central lecture
-        if($(this).attr('data-id') < 10000)
+        if($(this).attr('data-id') < 10000) {
             return;
+        }
 
         $(this).toggleClass('selected-course');
 
@@ -251,18 +252,17 @@ Schedule.prototype.showSchedule = function() {
     }.bind(this));
 };
 
+/**
+ * Calculate half hour time block (indexed from 8 am)
+ * @param time time to calculate
+ * @returns {number} time block for the given time
+ */
 Schedule.prototype.calculateTimeBlock = function(time) {
-
-    // todo: more flexible way of doing this by simply by rounding up
 
     // break the time string into parts
     var matches = time.match(/(\d{1,2}):(\d{2})([AP]M)/);
 
-    // time = :00 means its right on the hour
-    // time = :53 means it ends right before the hour, so +1. No class starts at :53.
-    // time = :30 means it starts at half hour. No class ends then.
-    // anything else is considered half hour (:20 or :23)
-
+    // skip 12 blocks if PM
     var pmOffset = (
         parseInt(matches[1]) + (
             (matches[3] == 'AM' && parseInt(matches[1]) == 12) ||
@@ -271,16 +271,19 @@ Schedule.prototype.calculateTimeBlock = function(time) {
         )
     );
 
-    return ((
+    // on the hour or half hour
+    // 0 - [:00], 0.5 - (:00, :30], 1 - (:30, :00)
+    var halfHour = 1;
+    if (matches[2] == 0) {
+        halfHour = 0;
+    } else if (matches[2] <= 30 && matches[2] > 0) {
+        halfHour = 0.5;
+    }
 
-            // convert to 24 hour clock
-            (parseInt(matches[1]) + ((matches[3] == 'AM' && parseInt(matches[1]) == 12)
-            || (matches[3] == 'PM' && parseInt(matches[1]) != 12) ? 12 : 0))
-
-            + (matches[2] == '00' ? 0 : // starts on the hour
-                (matches[2] == '53' || matches[2] == '50') ? 1 :  // ends before the hour
-                    .5)
-        ) - 8) * 2 + 1;
+    // -8 because the earliest time displayed is 8 am
+    // double because each block is broken into two (half hour intervals)
+    // +1 because the first row in the HTML is actually the header
+    return (pmOffset + halfHour -  8) * 2 + 1;
 };
 
 /**
@@ -302,4 +305,52 @@ Schedule.prototype.removeCourse = function(course) {
 
 Schedule.prototype.hasConflict = function(course) {
     // todo
+};
+
+/**
+ * Notification Manager handles notifications
+ * @param notifications notification DOM element
+ * @constructor
+ */
+function NotificationManager(notifications) {
+    this.notifications = notifications;
+
+    this.notifications.on('click', '.alert', function() {
+        $(this).stop().remove();
+    });
+}
+
+/**
+ *
+ * @param msg {string} notification message, html accepted but links won't be clickable because clicking triggers closing it
+ * @param color {string} success, info, warning, or danger
+ * @param time {int} time in seconds (default: 5)
+ */
+NotificationManager.prototype.show = function(msg, color, time) {
+    color = color || 'info';
+    time = time || 5;
+
+    var $notification =
+        $('#default-notification').clone()
+            .attr('id', '')
+            .addClass('alert-' + color)
+            .html(msg);
+
+    this.notifications.append($notification);
+
+    $notification.animate({
+        'left': 0,
+        'opacity': 1
+    }, 500).delay(time * 1000).animate({
+        'left': '100%',
+        'opacity': 0
+    }, 500, "linear", function() {
+        $(this).remove();
+    });
+
+    return $notification;
+};
+
+NotificationManager.prototype.stopAll = function() {
+    this.notifications.children().stop().remove();
 };
