@@ -48,26 +48,40 @@ def is_5numbers(str):
         return str.isnumeric()
 
 
-def save_to_db(data):
+def save_to_db(conn, data):
     if data['deptCodeNum'] != '':
-        # # Connect to mongodb client
-        # client = MongoClient('localhost', 27017)
-        #
-        # # Get the database
-        # db = client.seacourses
-        #
-        # # Get the collection
-        # collection = db.s16courses
-        #
-        # # Save a new document into the collection
-        # collection.insert_one(data)
-        #
-        # # if len(data['name']) == 0:
-        # # if data['deptCodeNum'] == 'AAS327':
-        print(data)
+        with conn.cursor() as cursor:
+            # print(data)
+            query = "INSERT INTO s16courses VALUES (%s, %s, %s, %s, %s, %s, %s," \
+                    "%s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(query, (data['_id'],
+                                   data['deptCodeNum'],
+                                   data['name'],
+                                   data['prof'],
+                                   data['days'],
+                                   data['startTime'],
+                                   data['endTime'],
+                                   data['loc'],
+                                   data['dec'],
+                                   data['sbcs'],
+                                   data['type'],
+                                   data['prereqs'],
+                                   data['credits'],
+                                   data['centralLink'] if 'centralLink' in data else '',
+                                   data['color']))
+            conn.commit()
+            print(data['deptCodeNum'] + ' inserted successfully.')
 
 # Open the text doc with all the class information
 textDoc = open('../schedules/spring2016.txt', 'r')
+
+# Open the connection to database
+connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='',
+                             db='seacourses',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
 
 currentData = {'_id': 0,
                'deptCodeNum': '',
@@ -191,7 +205,7 @@ for i in range(0, 10000):
 
             newData['loc'] = newData['loc'].title()
             newData['color'] = '#' + generate_color(newData['deptCodeNum'][:3])
-            save_to_db(newData)
+            save_to_db(connection, newData)
 
         # Recitation is tied to a lab
         elif split[0].find('REC') != -1:
@@ -287,5 +301,6 @@ for i in range(0, 10000):
 
             currentData['loc'] = currentData['loc'].title()
             currentData['color'] = '#' + generate_color(currentData['deptCodeNum'][:3])
-            save_to_db(currentData)
+            save_to_db(connection, currentData)
 print("Done!")
+connection.close()

@@ -10,6 +10,7 @@ from flask import Flask, render_template, jsonify, Response, request
 from pymongo import MongoClient
 import json
 from classes.course import Course
+import pymysql
 
 app = Flask(__name__)
 
@@ -18,6 +19,12 @@ app = Flask(__name__)
 @app.route('/search/<int:page>')
 def connect(page):
 
+    # pull out search variables
+    dept_code = request.args.get('deptCodeNum')
+    prof = request.args.get('prof')
+    dec = request.args.get('dec')
+    days = request.args.get('days')
+
     client = MongoClient("mongodb://localhost:27017")
     cursor = client.seacourses.s16courses.find({
         'deptCodeNum': {'$regex': '^' + request.args.get('deptCodeNum', '')},
@@ -25,6 +32,18 @@ def connect(page):
         'dec': {'$regex': '^' + request.args.get('dec', '')},
         'days': {'$regex': '^' + request.args.get('days', '')},
     }).sort([('deptCodeNum', 1)])
+
+    # conn = pymysql.connect(host='localhost',
+    #                              user='root',
+    #                              password='',
+    #                              db='seacourses',
+    #                              charset='utf8mb4',
+    #                              cursorclass=pymysql.cursors.DictCursor)
+    # try:
+    #     with conn.cursor() as cursor:
+    #         query = "SELECT * FROM s16courses"
+    # finally:
+    #     conn.close()
 
     courses = []
     for course in cursor:
