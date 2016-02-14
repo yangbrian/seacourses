@@ -9,6 +9,7 @@
         parse each line into relevant information, and write into mongodb
 """
 from pymongo import MongoClient
+import pymysql
 
 
 # Generate a different color for each dept
@@ -49,27 +50,39 @@ def is_5numbers(str):
 
 def save_to_db(data):
     if data['deptCodeNum'] != '':
-        # Connect to mongodb client
-        client = MongoClient('localhost', 27017)
-
-        # Get the database
-        db = client.seacourses
-
-        # Get the collection
-        collection = db.s16courses
-
-        # Save a new document into the collection
-        collection.insert_one(data)
-
-        # if len(data['name']) == 0:
-        # if data['deptCodeNum'] == 'AAS327':
+        # # Connect to mongodb client
+        # client = MongoClient('localhost', 27017)
+        #
+        # # Get the database
+        # db = client.seacourses
+        #
+        # # Get the collection
+        # collection = db.s16courses
+        #
+        # # Save a new document into the collection
+        # collection.insert_one(data)
+        #
+        # # if len(data['name']) == 0:
+        # # if data['deptCodeNum'] == 'AAS327':
         print(data)
 
 # Open the text doc with all the class information
 textDoc = open('../schedules/spring2016.txt', 'r')
 
-currentData = {'_id': 0, 'deptCodeNum': '', 'name': '', 'prof': '', 'days': '', 'startTime': '', 'endTime': '',
-               'room': '', 'dec': '', 'sbcs': '', 'type': '', 'prereqs': '', 'credits': '', 'centralLink': 0}
+currentData = {'_id': 0,
+               'deptCodeNum': '',
+               'name': '',
+               'prof': '',
+               'days': '',
+               'startTime': '',
+               'endTime': '',
+               'room': '',
+               'dec': '',
+               'sbcs': '',
+               'type': '',
+               'prereqs': '',
+               'credits': 0,
+               'centralLink': 0}
 hasCentral = False
 centralCount = 0
 
@@ -95,10 +108,11 @@ for i in range(0, 10000):
                 currentData = {'_id': 0, 'deptCodeNum': deptCodeNum, 'name': '', 'prof': '', 'days': '',
                                'startTime': '', 'endTime': '', 'loc': '', 'dec': '', 'sbcs': '', 'type': '',
                                'prereqs': '',
-                               'credits': ''}
+                               'credits': 0}
                 if length > 2:
                     # Has the DEC on the same line
-                    if (len(split[2]) == 1 and textString.find('Credit') == -1) or len(split[2]) == 2:
+                    if (len(split[2]) == 1 and textString.find('Credit') == -1) or \
+                            (len(split[2]) == 2 and split[2] != 'Sr'):
                         currentData['dec'] = split[2]
                         nextLine = textDoc.readline()
                         while len(nextLine.split()) == 0:
@@ -118,7 +132,7 @@ for i in range(0, 10000):
                             currentData['name'] = currentData['name'] + split[count] + ' '
                             count += 1
                         if count < length and split[count].find('Credit') != -1:
-                            currentData['credits'] = split[count + 1]
+                            currentData['credits'] = int(split[count + 1])
 
                 else:
                     nextLine = textDoc.readline()
@@ -136,6 +150,10 @@ for i in range(0, 10000):
             time = split[3]
             startTime = time[:time.find('-')]
             endTime = time[time.find('-')+1:]
+            if endTime.find('AM') != -1:
+                startTime += 'AM'
+            else:
+                startTime += 'PM'
             prof = ''
             if len(split) > 6:
                 for z in range(7, len(split)):
@@ -155,7 +173,7 @@ for i in range(0, 10000):
                        'dec': currentData['dec'],
                        'sbcs': currentData['sbcs'],
                        'prereqs': '',
-                       'credits': '',
+                       'credits': 0,
                        'centralLink': '',
                        'color': generate_color(currentData['deptCodeNum'][:3])}
 
@@ -175,9 +193,50 @@ for i in range(0, 10000):
             newData['color'] = '#' + generate_color(newData['deptCodeNum'][:3])
             save_to_db(newData)
 
+        # Recitation is tied to a lab
+        elif split[0].find('REC') != -1:
+            centralCount += 1
+
+            time = split[3]
+            startTime = time[:time.find('-')]
+            endTime = time[time.find('-')+1:]
+            if endTime.find('AM') != -1:
+                startTime += 'AM'
+            else:
+                startTime += 'PM'
+
+            newData = {'_id':centralCount,
+                       'deptCodeNum': currentData['deptCodeNum'],
+                       'name': currentData['name'],
+                       'type': 'REC' + split[1],
+                       'section': split[1],
+                       'days': split[2],
+                       'startTime': startTime,
+                       'endTime': endTime,
+                       'loc': '',
+                       'prof': 'TBA',
+                       'room': '',
+                       'dec': currentData['dec'],
+                       'sbcs': currentData['sbcs'],
+                       'prereqs': '',
+                       'credits': '',
+                       'centralLink': '',
+                       'color': generate_color(currentData['deptCodeNum'][:3])}
+            count = 4
+            while split[count].isupper() and split[count] != 'TBA':
+                newData['loc'] = newData['loc'] + split[count] + ' '
+                count += 1
+            if split[count].isnumeric():
+                newData['loc'] += split[count]
+                count += 1
+            if len(newData['loc']) == 0:
+                newData['loc'] = 'TBA'
+            # print('REC')
+            # print(newData)
+
         # Credit and SBC Line
         elif split[0].find('Credit') != -1:
-            currentData['credits'] = split[1]
+            currentData['credits'] = int(split[1])
             for k in range(3, len(split)):
                 currentData['sbcs'] += split[k]
 

@@ -1217,8 +1217,10 @@ Prerequisite: C or higher in BIO 202; C or higher in BIO 205 or BIO 207; CHE 132
 Note: Lab fee $59.  Lab meets first week of classes
 50647         LAB      L02        TU            09:30-12:30PM         CTR MOLEC ME                 114           TBA
 REC      R03        W              12:00-12:53PM         CTR MOLEC ME                 114           TBA
-50648         LAB      L03        W              01:00-04:00PM         CTR MOLEC ME                 114           TBA REC      R04        TH            08:30-09:23AM         CTR MOLEC ME                 114           TBA
-50649         LAB      L04        TH            09:30-12:30PM         CTR MOLEC ME                 114           TBA REC      R05        TU            04:00-04:53PM         CTR MOLEC ME                 114           TBA
+50648         LAB      L03        W              01:00-04:00PM         CTR MOLEC ME                 114           TBA
+REC      R04        TH            08:30-09:23AM         CTR MOLEC ME                 114           TBA
+50649         LAB      L04        TH            09:30-12:30PM         CTR MOLEC ME                 114           TBA
+REC      R05        TU            04:00-04:53PM         CTR MOLEC ME                 114           TBA
 52183         LAB      L05        TU            05:00-08:00PM         CTR MOLEC ME                 114           TBA
 
 BIO         315                       Microbiology                                                    Credit(s): 3
