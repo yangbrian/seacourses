@@ -1,8 +1,9 @@
 body {
   font: 14px 'Lato', sans-serif;
-  font-weight: 300; }
+  font-weight: 300;
+}
 
-.btn {
+.btn{
   background: transparent;
   color: #000;
   -webkit-transition: all 0.25s ease-in-out;
@@ -10,58 +11,73 @@ body {
   -ms-transition: all 0.25s ease-in-out;
   -o-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
-  border-color: #aaa; }
+  border-color: #aaa;
+}
 
 table tr, table th {
   text-align: center;
-  transition: all 0.25s ease-in; }
+  transition: all 0.25s ease-in;
+}
 
 table tr:hover {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 tr.course {
   border-left: 4px solid #5463c3;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 tr.course td {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 tr.course:hover {
-  border-left: 15px solid #5463c3; }
+  border-left: 15px solid #5463c3;
+}
 
 .id, .dept, .code, .dec {
-  width: 5%; }
+  width: 5%;
+}
 
 .type, .sbc {
-  width: 8%; }
+  width: 8%;
+}
 
 .name {
-  width: 20%; }
+  width: 20%;
+}
 
-.prof, .location {
-  width: 15%; }
+.prof, .location{
+  width: 15%;
+}
 
 .selected-course {
-  background-color: rgba(137, 241, 138, 0.5); }
+  background-color: rgba(137, 241, 138, 0.5);
+}
 
 .table-hover .selected-course:hover {
-  background-color: rgba(137, 241, 138, 0.9); }
+  background-color: rgba(137, 241, 138, 0.9);
+}
 
 .pages {
-  float: right; }
+  float: right;
+}
 
 .pages ul {
-  list-style: none; }
+  list-style: none;
+}
 
 .pages ul li {
   display: inline;
-  padding: 5px; }
+  padding: 5px;
+}
 
 .count {
   display: inline-block;
@@ -72,27 +88,34 @@ tr.course:hover {
   line-height: 1.42857143;
   text-align: center;
   white-space: nowrap;
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
 #search {
-  padding: 10px 0; }
+  padding: 10px 0;
+}
 
 #search .input-group {
-  max-width: 250px; }
+  max-width: 250px;
+}
 
 .schedule-row {
   display: flex;
-  height: 45px; }
+  height: 45px;
+}
 
 .schedule-cell {
   flex: 1 0 auto;
   width: 150px;
   border: 1px solid #eee;
   position: relative;
-  font-size: 0.9em; }
-  .schedule-cell:first-child {
+  font-size: 0.9em;
+
+  &:first-child {
     width: 75px;
-    text-align: center; }
+    text-align: center;
+  }
+}
 
 .schedule-item {
   width: 150px;
@@ -103,30 +126,38 @@ tr.course:hover {
   border: 1px solid #111;
   padding: 5px;
   text-align: center;
-  line-height: 1.3em; }
+  line-height: 1.3em;
+}
 
 .schedule-item-content {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; }
+  text-overflow: ellipsis;
+}
 
 .days-header {
-  height: 20px; }
-  .days-header .schedule-cell {
+  height: 20px;
+
+  .schedule-cell {
     font-weight: bold;
-    text-align: center; }
+    text-align: center;
+  }
+}
 
 #notifications {
   position: fixed;
   z-index: 9999;
   bottom: 12px;
   right: 12px;
-  max-width: 275px; }
-  #notifications .alert {
+  max-width: 275px;
+
+  .alert {
     position: relative;
     left: 100%;
-    opacity: 0; }
-    #notifications .alert:hover {
-      cursor: pointer; }
+    opacity: 0;
 
-/*# sourceMappingURL=style.css.map */
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

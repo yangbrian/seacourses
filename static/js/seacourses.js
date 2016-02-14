@@ -41,7 +41,29 @@ $(document).ready(function() {
             courses = [];
 
             $.each(data, function (key, val) {
+
+                // convert course days to number array
+                var courseDays = [];
+                var days = val.days;
+                if (days.indexOf('SU') > -1)
+                    courseDays.push(0);
+                if (days.indexOf('M') > -1)
+                    courseDays.push(1);
+                if (days.indexOf('TU') > -1)
+                    courseDays.push(2);
+                if (days.indexOf('W') > -1)
+                    courseDays.push(3);
+                if (days.indexOf('TH') > -1)
+                    courseDays.push(4);
+                if (days.indexOf('F') > -1)
+                    courseDays.push(5);
+                if (days.indexOf('S') > -1)
+                    courseDays.push(6);
+
+                val.days = courseDays;
+
                 courses.push(val);
+
                 courseIndex[val.id] = key;
             });
 
@@ -96,6 +118,7 @@ $(document).ready(function() {
 
         // is central lecture
         if($(this).attr('data-id') < 10000) {
+            notifications.show('Please select a recitation/lab section instead.')
             return;
         }
 
@@ -199,23 +222,7 @@ Schedule.prototype.showSchedule = function() {
         var startRow = this.calculateTimeBlock(value.start);
 
         var endRow = this.calculateTimeBlock(value.end);
-        var columns = [];
-
-        var days = value.days;
-        if (days.indexOf('SU') > -1)
-            columns.push(0);
-        if (days.indexOf('M') > -1)
-            columns.push(1);
-        if (days.indexOf('TU') > -1)
-            columns.push(2);
-        if (days.indexOf('W') > -1)
-            columns.push(3);
-        if (days.indexOf('TH') > -1)
-            columns.push(4);
-        if (days.indexOf('F') > -1)
-            columns.push(5);
-        if (days.indexOf('S') > -1)
-            columns.push(6);
+        var columns = value.days;
 
 
         /**
@@ -304,7 +311,15 @@ Schedule.prototype.removeCourse = function(course) {
 
 
 Schedule.prototype.hasConflict = function(course) {
-    // todo
+
+    var courseStart = this.calculateTimeBlock(course.start);
+    var courseEnd = this.calculateTimeBlock(course.end);
+
+
+    $.each(this.selectedCourses, function(index, value) {
+
+    });
+
 };
 
 /**

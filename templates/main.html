@@ -16,6 +16,7 @@
     <script src="/static/js/seacourses.js"></script>
     <meta charset="UTF-8">
     <title>SeaCourses</title>
+
     </head>
     <body>
         <div class="container">
@@ -367,6 +368,15 @@
                     </div>
                 </div>
              </div> <!-- /schedule modal -->
+
+            <!-- Notifications Area -->
+            <div id="notifications"></div>
+            <div id="default-notification" class="post-message alert" role="alert"></div>
+
         </div> <!-- /page container -->
+
+        <script type="text/javascript">
+            var notifications = new NotificationManager($('#notifications'));
+        </script>
     </body>
 </html>
