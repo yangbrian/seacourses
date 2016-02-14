@@ -12,6 +12,9 @@ body {
   transition: all 0.25s ease-in-out;
   border-color: #aaa; }
 
+#credits {
+  padding: 10px; }
+
 table tr, table th {
   text-align: center;
   transition: all 0.25s ease-in; }

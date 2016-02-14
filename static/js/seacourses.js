@@ -17,6 +17,7 @@ $(document).ready(function() {
 
     var table = $('#course-table');
     var countDisplay = $('.count');
+
     var count = 0;
 
     var page = 0;
@@ -61,6 +62,7 @@ $(document).ready(function() {
                     courseDays.push(6);
 
                 val.daysNum = courseDays;
+                val.credits = parseInt(val.credits);
 
                 courses.push(val);
 
@@ -144,22 +146,47 @@ $(document).ready(function() {
 
         $(this).toggleClass('selected-course');
 
+
+
+
+
         var lecRow;
         if ($(this).attr('data-lec') != '') {
 
+
+            var lecture = courses[courseIndex[$(this).attr('data-lec')]];
+
+            // lecture selected by another recitation already
+            if (courseSelected(lecture)) {
+                $('tr.course[data-lec=' + $(this).attr('data-lec')  + ']').removeClass('selected-course');
+            } else {
+
+            }
+
             lecRow = $('tr.course[data-id=' + $(this).attr('data-lec') + ']');
 
-            lecRow.toggleClass('selected-course');
+            if (!lecRow || !lecRow.hasClass('selected-course')) {
 
-            // add the lecture here to account for the fact that it might be on another page
-            if ($(this).hasClass('selected-course')) {
-
-                if (!schedule.addCourse(courses[courseIndex[$(this).attr('data-lec')]])) {
+                if (lecRow)
                     lecRow.toggleClass('selected-course');
-                    return; // don't even bother doing recitation then
-                }
-            } else
-                schedule.removeCourse(courses[courseIndex[$(this).attr('data-lec')]]);
+
+                // add the lecture here to account for the fact that it might be on another page
+                if ($(this).hasClass('selected-course')) {
+
+                    if (!schedule.addCourse(lecture)) {
+                        if (lecRow)
+                            lecRow.toggleClass('selected-course');
+                        return; // don't even bother doing recitation then
+                    }
+                } else
+                    schedule.removeCourse(courses[courseIndex[$(this).attr('data-lec')]]);
+
+
+            } else {
+
+
+                $('tr.course[data-lec' + ']')
+            }
 
         }
 
@@ -228,6 +255,8 @@ $(document).ready(function() {
 function Schedule() {
 
     this.selectedCourses = [];
+    this.creditsDisplay = $('#credit-count');
+    this.credits = 0;
     this.reset();
 }
 
@@ -335,6 +364,10 @@ Schedule.prototype.calculateTimeBlock = function(time) {
 Schedule.prototype.addCourse = function(course) {
     if(!this.hasConflict(course)) {
         this.selectedCourses.push(course);
+
+        this.credits += course.credits;
+        this.creditsDisplay.text(this.credits);
+
         return true;
     } else {
         notifications.show('<strong>' + course.dept + course.code + ' (' + course.type + ') </strong>conflicts with an existing course.', 'danger');
@@ -344,6 +377,9 @@ Schedule.prototype.addCourse = function(course) {
 
 Schedule.prototype.removeCourse = function(course) {
     this.selectedCourses.splice($.inArray(course, this.selectedCourses), 1);
+
+    this.credits -= course.credits;
+    this.creditsDisplay.text(this.credits);
 };
 
 /**
