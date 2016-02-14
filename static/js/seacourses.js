@@ -41,7 +41,29 @@ $(document).ready(function() {
             courses = [];
 
             $.each(data, function (key, val) {
+
+                // convert course days to number array
+                var courseDays = [];
+                var days = val.days;
+                if (days.indexOf('SU') > -1)
+                    courseDays.push(0);
+                if (days.indexOf('M') > -1)
+                    courseDays.push(1);
+                if (days.indexOf('TU') > -1)
+                    courseDays.push(2);
+                if (days.indexOf('W') > -1)
+                    courseDays.push(3);
+                if (days.indexOf('TH') > -1)
+                    courseDays.push(4);
+                if (days.indexOf('F') > -1)
+                    courseDays.push(5);
+                if (days.indexOf('S') > -1)
+                    courseDays.push(6);
+
+                val.daysNum = courseDays;
+
                 courses.push(val);
+
                 courseIndex[val.id] = key;
             });
 
@@ -84,9 +106,29 @@ $(document).ready(function() {
                     .css('border-color', course.color)
                     .attr('data-id', course.id)
                     .attr('data-lec', course.lec)
-                    .addClass($.inArray(course, schedule.selectedCourses) > -1 ? 'selected-course' : '')
+                    .addClass(courseSelected(course) ? 'selected-course' : '')
             )
         }
+    }
+
+    /**
+     * Check if course is already selected
+     * @param course course object
+     * @returns {boolean} course selected
+     */
+    function courseSelected(course) {
+        if ($.inArray(course, schedule.selectedCourses)  > -1)
+            return true;
+
+        var selected = false;
+        $.each(schedule.selectedCourses, function (index, value) {
+            if (value.id == course.id) {
+                selected = true;
+                return false;
+            }
+        });
+
+        return selected;
     }
 
     // initial course load
@@ -96,27 +138,42 @@ $(document).ready(function() {
 
         // is central lecture
         if($(this).attr('data-id') < 10000) {
+            notifications.show('Please select a recitation/lab section instead.')
             return;
         }
 
         $(this).toggleClass('selected-course');
 
+        var lecRow;
         if ($(this).attr('data-lec') != '') {
 
-            $('tr.course[data-id=' + $(this).attr('data-lec') + ']').toggleClass('selected-course');
+            lecRow = $('tr.course[data-id=' + $(this).attr('data-lec') + ']');
+
+            lecRow.toggleClass('selected-course');
 
             // add the lecture here to account for the fact that it might be on another page
-            if ($(this).hasClass('selected-course'))
-                schedule.addCourse(courses[courseIndex[$(this).attr('data-lec')]]);
-            else
+            if ($(this).hasClass('selected-course')) {
+
+                if (!schedule.addCourse(courses[courseIndex[$(this).attr('data-lec')]])) {
+                    lecRow.toggleClass('selected-course');
+                    return; // don't even bother doing recitation then
+                }
+            } else
                 schedule.removeCourse(courses[courseIndex[$(this).attr('data-lec')]]);
 
         }
 
+        if ($(this).hasClass('selected-course')) {
+            if (!schedule.addCourse(courses[courseIndex[$(this).attr('data-id')]])) {
+                $(this).toggleClass('selected-course');
 
-        if ($(this).hasClass('selected-course'))
-            schedule.addCourse(courses[courseIndex[$(this).attr('data-id')]]);
-        else
+                if ($(this).attr('data-lec') != '') {
+                    // remove the added lecture section
+                    lecRow.toggleClass('selected-course');
+                    schedule.removeCourse(courses[courseIndex[$(this).attr('data-lec')]]);
+                }
+            }
+        } else
             schedule.removeCourse(courses[courseIndex[$(this).attr('data-id')]]);
 
     });
@@ -199,23 +256,7 @@ Schedule.prototype.showSchedule = function() {
         var startRow = this.calculateTimeBlock(value.start);
 
         var endRow = this.calculateTimeBlock(value.end);
-        var columns = [];
-
-        var days = value.days;
-        if (days.indexOf('SU') > -1)
-            columns.push(0);
-        if (days.indexOf('M') > -1)
-            columns.push(1);
-        if (days.indexOf('TU') > -1)
-            columns.push(2);
-        if (days.indexOf('W') > -1)
-            columns.push(3);
-        if (days.indexOf('TH') > -1)
-            columns.push(4);
-        if (days.indexOf('F') > -1)
-            columns.push(5);
-        if (days.indexOf('S') > -1)
-            columns.push(6);
+        var columns = value.daysNum;
 
 
         /**
@@ -292,19 +333,70 @@ Schedule.prototype.calculateTimeBlock = function(time) {
  * @returns {*} the new number of courses, or false if a time conflict
  */
 Schedule.prototype.addCourse = function(course) {
-    if(!this.hasConflict(course))
-        return this.selectedCourses.push(course);
-    else
+    if(!this.hasConflict(course)) {
+        this.selectedCourses.push(course);
+        return true;
+    } else {
+        notifications.show('<strong>' + course.dept + course.code + ' (' + course.type + ') </strong>conflicts with an existing course.', 'danger');
         return false;
+    }
 };
 
 Schedule.prototype.removeCourse = function(course) {
     this.selectedCourses.splice($.inArray(course, this.selectedCourses), 1);
 };
 
+/**
+ * Check if a new course conflicts with any added courses
+ * @param newCourse new course being added
+ * @returns {boolean} true if conflict found, false otherwise
+ */
+Schedule.prototype.hasConflict = function(newCourse) {
 
-Schedule.prototype.hasConflict = function(course) {
-    // todo
+    var courseStart = this.calculateTimeBlock(newCourse.start);
+    var courseEnd = this.calculateTimeBlock(newCourse.end);
+
+    var noConflict = true;
+
+    $.each(this.selectedCourses, function(index, course) {
+
+        // check for intersection of days arrays
+        if ((function() {
+                var a = course.daysNum;
+                var b = newCourse.daysNum;
+
+                // filter over the shorter of the two
+                if (b.length > a.length) {
+                    var t = b;
+                    b = a;
+                    a = t;
+                }
+
+                return a.filter(function (e) {
+                    if (b.indexOf(e) !== -1)
+                        return true;
+                })
+            })
+        ) {
+            var start = this.calculateTimeBlock(course.start);
+            var end = this.calculateTimeBlock(course.end);
+
+            // check for time interval overlap
+            return (
+                noConflict = !(
+                        (courseEnd > start && courseEnd < end) ||
+                        (courseStart < start && courseEnd > start) ||
+                        (courseStart > start && courseStart < end) ||
+                        (courseStart == start) ||
+                        (courseEnd == end)
+                    )
+            );
+
+        }
+    }.bind(this));
+
+    return !noConflict;
+
 };
 
 /**
